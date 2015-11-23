@@ -1,8 +1,10 @@
 import pyglet
+from time import sleep
 
 """
 to do:
 -- function for to get the size of the video file, probably through a subprocess call to ffmpeg
+-- function to get the size of each screen (display?)
 """
 
 # video name
@@ -11,13 +13,19 @@ name = '/Users/lukereding/Desktop/small_vs_intermediate_2.mp4'
 platform = pyglet.window.get_platform()
 display = platform.get_default_display()
 screens = display.get_screens()
+print screens
 
 if len(screens) == 2:
     print "two displays connected"
 
 # supply width and height of video
-window = pyglet.window.Window(1280,1024, str(screens[1]))
-#window_1 = pyglet.window.Window(1280,1024, screens[1])
+window = pyglet.window.Window(screens[1].width,screens[1].height, screen = screens[0], visible = False, fullscreen = True)
+window.set_location(screens[1].x, screens[1].y)
+window.set_visible()
+
+window_1 = pyglet.window.Window(screens[0].width,screens[0].height, screen = screens[0], visible = False, fullscreen = True)
+window_1.set_location(screens[0].x, screens[0].y)
+window_1.set_visible()
 
 video = pyglet.media.Player() # create a video player
 media = pyglet.media.load(name) # supply the media file
@@ -26,6 +34,11 @@ video.queue(media) # add the media file to the queue
 video.play()       # begin to play file on the queue
 
 @window.event
+def on_draw():
+    # now rendering the media file
+    video.get_texture().blit(0, 0)
+
+@window_1.event
 def on_draw():
     # now rendering the media file
     video.get_texture().blit(0, 0)
