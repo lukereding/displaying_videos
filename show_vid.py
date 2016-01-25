@@ -2,9 +2,13 @@ from psychopy import visual, core, event
 import pyglet, sys
 
 
-# python script to run two different videos on two separate screens attached to the computer.
-# run like `python show_vid.py path/video1 path/video2`
+'''
+python script to run two different videos on two separate screens attached to the computer.
+run like `python show_vid.py path/video1 path/video2`
+'''
 
+## to do:
+## - set the window size equal to the size of each screen
 
 # get information about the screens. print to the screen
 all_screens = pyglet.window.get_platform().get_default_display().get_screens()
@@ -12,6 +16,7 @@ print all_screens
 
 # get sizes of all screens
 for screen in all_screens:
+    print "size of screens:\n"
     print screen.width, screen.height
 
 # make sure there are two screens attached:
@@ -19,8 +24,8 @@ if len(all_screens) != 2:
     sys.exit("\n\nyou need two screens connected to the computer. exiting.\n")
 
 #define the windows
-mainWin = visual.Window([1280,800], units='norm', fullscr=False, screen=0)
-secondWin = visual.Window([1920,1080], units='norm', fullscr=False, screen=1)
+mainWin = visual.Window([screen[0].heightscreen[0].width], units='norm', fullscr=False, screen=0)
+secondWin = visual.Window([screen[1].heightscreen[1].width], units='norm', fullscr=False, screen=1)
 
 # load videos
 mov1 = visual.MovieStim(mainWin, sys.argv[1], flipVert=False)
@@ -34,11 +39,11 @@ print 'second video size=[%i,%i]' %(mov2.format.width, mov2.format.height)
 
 globalClock = core.Clock()
 
-text = visual.TextStim(mainWin, text=str(globalClock.getTime()),pos=(0,0))
-
 while globalClock.getTime()<(mov1.duration+60):
     mov1.draw()
     mov2.draw()
+    if globalClock.getTime()
+    text = visual.TextStim(mainWin, text=str(globalClock.getTime()),pos=(0,-0.6),alignVert='bottom', color='SlateGrey')
     text.draw()
     mainWin.update()
     secondWin.update()
