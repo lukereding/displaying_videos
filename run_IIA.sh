@@ -43,7 +43,7 @@ fi
 
 # save a log file of the trial
 if [ -f $LOG_FILE ]; then
-    echo "$female,`date`,$temperature,$observer,$trial_type,$left_screen,$right_screen,$middle_screen" > $LOG_FILE
+    echo "$female,`date`,$temperature,$observer,$trial_type,$left_screen,$right_screen,$middle_screen" >> $LOG_FILE
 else
     # then it's the first trial first trial --
     echo "female,date,temperature,observer,trial_type,left_screen,right_screen,middle_screen" > $LOG_FILE
