@@ -17,11 +17,11 @@ class Screen:
     example: Screen("screen1", all_screens[0], "/Users/lukereding/Documents/blender_files/transitivity/size/small_vs_large2.mp4")
     '''
     
-    def __init__(self, name, monitor, video_path):
+    def __init__(self, name, monitor, video_path, number):
         self.name = name
         self.width = monitor.width
         self.height = monitor.height
-        self.window = visual.Window([monitor.width, monitor.height], units='norm', fullscr=False, screen=0)
+        self.window = visual.Window([monitor.width, monitor.height], units='norm', fullscr=False, screen=number)
         self.video =  visual.MovieStim(self.window, video_path, flipVert=False)
         self.video_width = int(self.video.format.width)
         self.video_height = int(self.video.format.height)
@@ -50,8 +50,8 @@ all_screens = pyglet.window.get_platform().get_default_display().get_screens()
 print all_screens
 
 # define each monitor
-screen1 = Screen("screen1", all_screens[0], sys.argv[1])
-screen2 = Screen("screen2", all_screens[1], sys.argv[2])
+screen1 = Screen("screen1", all_screens[0], str(sys.argv[1]), 0)
+screen2 = Screen("screen2", all_screens[1], str(sys.argv[2]), 1)
 
 # make sure there are two screens attached:
 if len(all_screens) != 2:
