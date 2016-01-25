@@ -1,4 +1,4 @@
-import pyglet
+import pyglet, sys
 from time import sleep
 
 """
@@ -7,8 +7,9 @@ to do:
 -- function to get the size of each screen (display?)
 """
 
-# video name
-name = '/Users/lukereding/Desktop/small_vs_intermediate_2.mp4'
+# read video names
+name1 = sys.argv[0]
+name2 = sys.argv[1]
 
 platform = pyglet.window.get_platform()
 display = platform.get_default_display()
@@ -17,6 +18,10 @@ print screens
 
 if len(screens) == 2:
     print "two displays connected"
+    if not name2:
+        sys.exit("\n\nmissing argument for second video. exiting.\n")
+else:
+    sys.exit("\n\nyou need at least two screens connected to the computer. exiting.\n")
 
 # supply width and height of video
 window = pyglet.window.Window(screens[1].width,screens[1].height, screen = screens[0], visible = False, fullscreen = True)
