@@ -23,8 +23,8 @@ mainWin = visual.Window([1280,800], units='norm', fullscr=False, screen=0)
 secondWin = visual.Window([1920,1080], units='norm', fullscr=False, screen=1)
 
 # load videos
-mov1 = visual.MovieStim(mainWin, sys.argv[0], flipVert=False)
-mov2 = visual.MovieStim(secondWin, sys.argv[1], flipVert=False)
+mov1 = visual.MovieStim(mainWin, sys.argv[1], flipVert=False)
+mov2 = visual.MovieStim(secondWin, sys.argv[2], flipVert=False)
 
 print "the first video is %s seconds long" %{mov1.duration}
 print "the second video is %s seconds long" %{mov2.duration}
