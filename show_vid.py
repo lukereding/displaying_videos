@@ -79,7 +79,7 @@ while globalClock.getTime()<(screen1.duration+60):
     if globalClock.getTime() > screen1.duration+10:
         text = visual.TextStim(screen1.window, text="trial ended (!)", pos=(0,-0.6), alignVert='bottom', color='SlateGrey')
     else:
-        text = visual.TextStim(screen1.window, text=str(round(globalClock.getTime(),0)) + " seconds into the video", pos=(0,-0.6), alignVert='bottom', color='SlateGrey')
+        text = visual.TextStim(screen1.window, text=str(screen1.duration - round(globalClock.getTime(),0)) + " seconds left in the video", pos=(0,-0.6), alignVert='bottom', color='SlateGrey')
     
     # draw the time, update the windows
     text.draw()
