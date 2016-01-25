@@ -22,8 +22,8 @@ if len(all_screens) != 2:
     sys.exit("\n\nyou need two screens connected to the computer. exiting.\n")
 
 #define the windows
-mainWin = visual.Window([all_screens[0].height,all_screens[0].width], units='norm', fullscr=False, screen=0)
-secondWin = visual.Window([all_screens[1].height,all_screens[1].width], units='norm', fullscr=False, screen=1)
+mainWin = visual.Window([all_screens[0].width, all_screens[0].height], units='norm', fullscr=False, screen=0)
+secondWin = visual.Window([all_screens[1].width, all_screens[1].height], units='norm', fullscr=False, screen=1)
 
 # load videos
 mov1 = visual.MovieStim(mainWin, sys.argv[1], flipVert=False)
