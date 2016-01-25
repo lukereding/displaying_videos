@@ -14,7 +14,8 @@ class Screen:
     
     '''
     screen class! 
-    example: Screen("screen1", all_screens[0], "/Users/lukereding/Documents/blender_files/transitivity/size/small_vs_large2.mp4")
+    use it to define your screen and what video it will play
+    example: Screen("screen1", all_screens[0], /Users/lukereding/Documents/blender_files/transitivity/size/small_vs_large2.mp4, 0)
     '''
     
     def __init__(self, name, monitor, video_path, number):
@@ -29,13 +30,13 @@ class Screen:
         self.duration = self.video.duration
         
     def print_monitor_size(self):
-        print "monitor {} has height of {} and width of {}.".format(self.name, self.width, self.height)
+        print "{} has height of {} and width of {}.".format(self.name, self.width, self.height)
     
     def print_video_size(self):
-        print "{} is {} x {}".format(self.video_path, self.video_height, self.video_width)
+        print " the video {} is {} x {}".format(self.video_path, self.video_height, self.video_width)
     
     def print_duration(self):
-        "{} is {} s long".format(self.video, self.duration)
+        print "{} is {} s long".format(self.video, self.duration)
     
     def draw(self):
         self.video.draw()
@@ -68,6 +69,7 @@ print screen2.print_duration()
 # start the clock for timing
 globalClock = core.Clock()
 
+# start the loop to show the videos 
 while globalClock.getTime()<(screen1.duration+60):
     # draw the videos
     screen1.draw()
@@ -77,7 +79,7 @@ while globalClock.getTime()<(screen1.duration+60):
     if globalClock.getTime() > screen1.duration+10:
         text = visual.TextStim(screen1.window, text="trial ended (!)", pos=(0,-0.6), alignVert='bottom', color='SlateGrey')
     else:
-        text = visual.TextStim(screen1.window, text=str(round(globalClock.getTime(),0)), pos=(0,-0.6), alignVert='bottom', color='SlateGrey')
+        text = visual.TextStim(screen1.window, text=str(round(globalClock.getTime(),0)) + " seconds into the video", pos=(0,-0.6), alignVert='bottom', color='SlateGrey')
     
     # draw the time, update the windows
     text.draw()
