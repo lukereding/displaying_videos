@@ -1,10 +1,10 @@
 from psychopy import visual, core, event
 import pyglet, sys
 
-'''
-python script to run two different videos on two separate screens attached to the computer.
-run like `python show_vid.py path/video1 path/video2`
-'''
+
+# python script to run two different videos on two separate screens attached to the computer.
+# run like `python show_vid.py path/video1 path/video2`
+
 
 # get information about the screens. print to the screen
 all_screens = pyglet.window.get_platform().get_default_display().get_screens()
@@ -15,7 +15,7 @@ for screen in all_screens:
     print screen.width, screen.height
 
 # make sure there are two screens attached:
-if len(screens) != 2:
+if len(all_screens) != 2:
     sys.exit("\n\nyou need two screens connected to the computer. exiting.\n")
 
 #define the windows
