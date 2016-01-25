@@ -24,8 +24,8 @@ if len(all_screens) != 2:
     sys.exit("\n\nyou need two screens connected to the computer. exiting.\n")
 
 #define the windows
-mainWin = visual.Window([screen[0].heightscreen[0].width], units='norm', fullscr=False, screen=0)
-secondWin = visual.Window([screen[1].heightscreen[1].width], units='norm', fullscr=False, screen=1)
+mainWin = visual.Window([all_screens[0].height,all_screens[0].width], units='norm', fullscr=False, screen=0)
+secondWin = visual.Window([all_screens[1].height,all_screens[1].width], units='norm', fullscr=False, screen=1)
 
 # load videos
 mov1 = visual.MovieStim(mainWin, sys.argv[1], flipVert=False)
@@ -42,8 +42,10 @@ globalClock = core.Clock()
 while globalClock.getTime()<(mov1.duration+60):
     mov1.draw()
     mov2.draw()
-    if globalClock.getTime()
-    text = visual.TextStim(mainWin, text=str(globalClock.getTime()),pos=(0,-0.6),alignVert='bottom', color='SlateGrey')
+    if globalClock.getTime() > mov1.duration:
+        text = visual.TextStim(mainWin, text="trial ended (!)",pos=(0,-0.6),alignVert='bottom', color='SlateGrey')
+    else:
+        text = visual.TextStim(mainWin, text=str(globalClock.getTime()),pos=(0,-0.6),alignVert='bottom', color='SlateGrey')
     text.draw()
     mainWin.update()
     secondWin.update()
