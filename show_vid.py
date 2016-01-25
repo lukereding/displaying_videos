@@ -34,9 +34,12 @@ print 'second video size=[%i,%i]' %(mov2.format.width, mov2.format.height)
 
 globalClock = core.Clock()
 
+text = visual.TextStim(mainWin, text=str(globalClock.getTime()),pos=(0,0))
+
 while globalClock.getTime()<(mov1.duration+60):
     mov1.draw()
     mov2.draw()
+    text.draw()
     mainWin.update()
     secondWin.update()
     
