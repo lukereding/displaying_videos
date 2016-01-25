@@ -29,12 +29,12 @@ mov2 = visual.MovieStim(secondWin, sys.argv[2], flipVert=False)
 print "the first video is %s seconds long" %{mov1.duration}
 print "the second video is %s seconds long" %{mov2.duration}
 
-print 'first video size=[%i,%i]' %(mov1.format.width, mov.format.height)
-print 'second video size=[%i,%i]' %(mov2.format.width, mov.format.height)
+print 'first video size=[%i,%i]' %(mov1.format.width, mov1.format.height)
+print 'second video size=[%i,%i]' %(mov2.format.width, mov2.format.height)
 
 globalClock = core.Clock()
 
-while globalClock.getTime()<(mov.duration+60):
+while globalClock.getTime()<(mov1.duration+60):
     mov1.draw()
     mov2.draw()
     mainWin.update()
