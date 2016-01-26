@@ -63,7 +63,7 @@ if __name__ == '__main__':
     if screen2:
         screen2.draw()
     
-    core.wait(5)
+    core.wait(10)
     
     # start the clock for timing
     globalClock = core.Clock()
