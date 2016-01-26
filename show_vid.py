@@ -79,7 +79,6 @@ if __name__ == '__main__':
             print "\n\ndone running.\n\n"
             core.quit()
         
-        print globalClock.getTime()
         # draw the videos
         screen1.draw()
         if screen2:
