@@ -21,13 +21,13 @@ class Screen:
         self.duration = self.video.duration
         
     def print_monitor_size(self):
-        print "{} has height of {} and width of {}.".format(self.name, self.width, self.height)
+        return "{} has height of {} and width of {}.".format(self.name, self.width, self.height)
     
     def print_video_size(self):
-        print " the video {} is {} x {}".format(self.video_path, self.video_height, self.video_width)
+        return " the video {} is {} x {}".format(self.video_path, self.video_height, self.video_width)
     
     def print_duration(self):
-        print "{} is {} s long".format(self.video_path, self.duration)
+        return "{} is {} s long".format(self.video_path, self.duration)
     
     def draw(self):
         self.video.draw()
