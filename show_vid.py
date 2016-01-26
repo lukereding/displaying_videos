@@ -26,6 +26,7 @@ if __name__ == '__main__':
     
     if args['video_2'] is None:
         print "\n\nyou've only entered one video name. Will only show one video.\n\n"
+        screen2 = False
         if not os.path.isfile(args['video_1']):
             print "\n\nlooks like the video path doesn't point to a valid file. exiting.\n\n"
             sys.exit(1)
@@ -47,13 +48,14 @@ if __name__ == '__main__':
     
     # if there's a second screen, set it up:
     try:
-        screen2 = screen.Screen("screen2", all_screens[1], args['video_2'], 1)
-        print "\n\n" + screen2.print_monitor_size()
-        print screen2.print_video_size()
-        print screen2.print_duration()
+        # if you have a second screen to play with:
+        if screen2:
+            screen2 = screen.Screen("screen2", all_screens[1], args['video_2'], 1)
+            print "\n\n" + screen2.print_monitor_size()
+            print screen2.print_video_size()
+            print screen2.print_duration()
     except:
         print "\nonly using one screen\n"
-        screen2 = False
     
     # start the clock for timing
     globalClock = core.Clock()
