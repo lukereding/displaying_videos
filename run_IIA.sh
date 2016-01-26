@@ -32,14 +32,14 @@ done
 # randomize which video goes to what monitor
 if [ "$trial_type" == "binary" ]; then
     array=( $(echo "small;large" | sed 's,([^;]\(*\)[;$]),\1,g' | tr ";" "\n" | gshuf | tr "\n" " " ) )
-    left_screen=${array[0]}.mp4
-    right_screen=${array[1]}.mp4
+    left_screen=${array[0]}
+    right_screen=${array[1]}
     middle_screen="NULL"
 elif [ "$trial_type" == "trinary" ]; then
     array=( $(echo "small;large;decoy" | sed 's,([^;]\(*\)[;$]),\1,g' | tr ";" "\n" | gshuf | tr "\n" " " ) )
-    left_screen=${array[0]}.mp4
-    right_screen=${array[1]}.mp4
-    middle_screen=${array[2]}.mp4
+    left_screen=${array[0]}
+    right_screen=${array[1]}
+    middle_screen=${array[2]}
 else
     echo "trial_type variable is not properly assigned"
     exit 1
@@ -64,10 +64,10 @@ fi
 
 # execute the python code and wait
 if ["$trial_type" == "binary" ]; then
-    python show_vid.py -v1 $left_screen -v2 $right_screen; wait
+    python show_vid.py -v1 $left_screen.mp4 -v2 $right_screen.mp4; wait
 else
-    python show_vid.py -v1 $left_screen -v2 $right_screen &
-    ssh $mini1 cd ~/Documents/displaying_videos/; python show_vid.py -v1 $middle_screen &
+    python show_vid.py -v1 $left_screen.mp4 -v2 $right_screen.mp4 &
+    ssh $mini1 cd ~/Documents/displaying_videos/; python show_vid.py -v1 $middle_screen.mp4 &
     wait
 fi
 
