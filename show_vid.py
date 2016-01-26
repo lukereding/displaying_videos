@@ -65,16 +65,16 @@ if __name__ == '__main__':
     # start the loop to show the videos 
     while globalClock.getTime() < (screen1.duration+60):
         
+        # draw the videos
+        screen1.draw()
+        if screen2:
+            screen2.draw()
+        
         # if the trial is ended, let the user know:
         if globalClock.getTime() > screen1.duration:
             text = visual.TextStim(screen1.window, text="trial ended (!)", pos=(0,-0.6), alignVert='bottom', color='SlateGrey')
         else:
             text = visual.TextStim(screen1.window, text=str(screen1.duration - round(globalClock.getTime(),0)) + " seconds left in the video", pos=(0,-0.6), alignVert='bottom', color='SlateGrey')
-        
-        # draw the videos and text
-        screen1.draw()
-        if screen2:
-            screen2.draw()
         
         # update the windows
         text.draw()
