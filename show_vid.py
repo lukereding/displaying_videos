@@ -24,7 +24,7 @@ if __name__ == '__main__':
     ap.add_argument("-v2", "--video_2", help="path to the second video", required = False)
     args = vars(ap.parse_args())
     
-    if 'video_2' is not in args:
+    if 'video_2' not in args:
         print "\n\nyou've only entered one video name. Will only show one video.\n\n"
         if not os.path.isfile(args['video_1']):
             print "\n\nlooks like the video path doesn't point to a valid file. exiting.\n\n"
