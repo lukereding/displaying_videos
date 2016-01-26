@@ -32,14 +32,14 @@ done
 # randomize which video goes to what monitor
 if [ "$trial_type" == "binary" ]; then
     array=( $(echo "small;large" | sed 's,([^;]\(*\)[;$]),\1,g' | tr ";" "\n" | gshuf | tr "\n" " " ) )
-    left_screen=${array[0]}
-    right_screen=${array[1]}
+    left_screen=${array[0]}.mp4
+    right_screen=${array[1]}.mp4
     middle_screen="NULL"
 elif [ "$trial_type" == "trinary" ]; then
     array=( $(echo "small;large;decoy" | sed 's,([^;]\(*\)[;$]),\1,g' | tr ";" "\n" | gshuf | tr "\n" " " ) )
-    left_screen=${array[0]}
-    right_screen=${array[1]}
-    middle_screen=${array[2]}
+    left_screen=${array[0]}.mp4
+    right_screen=${array[1]}.mp4
+    middle_screen=${array[2]}.mp4
 else
     echo "trial_type variable is not properly assigned"
     exit 1
@@ -63,7 +63,14 @@ else
 fi
 
 # execute the python code and wait
-# python display_video $left_screen $right_screen $ middle_screen ...; wait
+if ["$trial_type" == "binary" ]; then
+    python show_vid.py -v1 $left_screen -v2 $right_screen; wait
+else
+    python show_vid.py -v1 $left_screen -v2 $right_screen &
+    ssh $mini1 cd ~/Documents/displaying_videos/; python show_vid.py -v1 $middle_screen &
+    wait
+fi
+
 if [ $? -gt 0 ]; then
   echo "problem with python script"
   echo "python script failed at `date`" | mail -s "python script failed" lukereding@gmail.com
