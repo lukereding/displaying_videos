@@ -36,7 +36,7 @@ class Screen:
         print " the video {} is {} x {}".format(self.video_path, self.video_height, self.video_width)
     
     def print_duration(self):
-        print "{} is {} s long".format(self.video, self.duration)
+        print "{} is {} s long".format(self.video_path, self.duration)
     
     def draw(self):
         self.video.draw()
