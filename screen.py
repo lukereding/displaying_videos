@@ -24,7 +24,7 @@ class Screen:
         return "{} has height of {} and width of {}.".format(self.name, self.width, self.height)
     
     def print_video_size(self):
-        return " the video {} is {} x {}".format(self.video_path, self.video_height, self.video_width)
+        return "the video {} is {} x {}".format(self.video_path, self.video_height, self.video_width)
     
     def print_duration(self):
         return "{} is {} s long".format(self.video_path, self.duration)
