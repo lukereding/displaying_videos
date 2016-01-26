@@ -19,8 +19,8 @@ if __name__ == '__main__':
     args = vars(ap.parse_args())
     
     # make sure the videos exists
-    if not os.path.isfile(args['video_1']) or os.path.isfile(args['video_1']):
-        sys.exit("\n\n\none of the videos doesn't exist. make sure you enter the path to the videos correctly. exiting.")
+    if not os.path.isfile(args['video_1']) or not os.path.isfile(args['video_1']):
+        sys.exit("\n\n\none of the videos doesn't exist. make sure you enter the path to the videos correctly. exiting the script.\n\n")
     
     # get information about the screens. print to the screen
     all_screens = pyglet.window.get_platform().get_default_display().get_screens()
