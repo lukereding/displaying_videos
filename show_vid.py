@@ -24,7 +24,7 @@ if __name__ == '__main__':
     ap.add_argument("-v2", "--video_2", help="path to the second video", required = False)
     args = vars(ap.parse_args())
     
-    if not hasattr(args, 'video_2'):
+    if 'video_2' is not in args:
         print "\n\nyou've only entered one video name. Will only show one video.\n\n"
         if not os.path.isfile(args['video_1']):
             print "\n\nlooks like the video path doesn't point to a valid file. exiting.\n\n"
@@ -48,7 +48,7 @@ if __name__ == '__main__':
     # if there's a second screen, set it up:
     try:
         screen2 = screen.Screen("screen2", all_screens[1], args['video_2'], 1)
-        print screen2.print_monitor_size()
+        print "\n\n" + screen2.print_monitor_size()
         print screen2.print_video_size()
         print screen2.print_duration()
     except:
