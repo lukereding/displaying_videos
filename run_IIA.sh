@@ -64,6 +64,11 @@ fi
 
 # execute the python code and wait
 # python display_video $left_screen $right_screen $ middle_screen ...; wait
+if [ $? -gt 0 ]; then
+  echo "problem with python script"
+  echo "python script failed at `date`" | mail -s "python script failed" lukereding@gmail.com
+  exit 1
+fi
 
 # after trial is over, get the size of the fish
 echo "weight of female in grams: \c "
