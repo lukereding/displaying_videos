@@ -3,8 +3,6 @@
 from psychopy import visual, core, event
 import pyglet, sys, screen, argparse, os.path
 
-# have it work for one or two videos
-
 '''
 python script to run two different videos on two separate screens attached to the computer.
 run like `python show_vid.py path/video1 path/video2`
@@ -74,12 +72,12 @@ if __name__ == '__main__':
             text = visual.TextStim(screen1.window, text=str(screen1.duration - round(globalClock.getTime(),0)) + " seconds left in the video", pos=(0,-0.6), alignVert='bottom', color='SlateGrey')
         
         # draw the videos and text
-        text.draw()
         screen1.draw()
         if screen2:
             screen2.draw()
         
         # update the windows
+        text.draw()
         screen1.update()
         if screen2:
             screen2.update()
