@@ -6,9 +6,10 @@ import pyglet, sys, screen, argparse, os.path
 '''
 python script to run two different videos on two separate screens attached to the computer.
 run like `python show_vid.py path/video1 path/video2`
-the script will exit if you have fewer or more than two screens connected
-example: python show_vid.py -v1 /Users/lukereding/Documents/blender_files/transitivity/s
-ize/small_vs_large1.mp4
+
+the second video argument is actually optional; if omitted, it'll just show one video on whatever your main monitor is
+example: `python show_vid.py -v1 /Users/lukereding/Documents/blender_files/transitivity/s
+ize/small_vs_large1.mp4`
 '''
 
 if __name__ == '__main__':
@@ -63,7 +64,8 @@ if __name__ == '__main__':
     if screen2:
         screen2.draw()
     
-    core.wait(10)
+    # if you uncomment this, no weird intro period to the video, but you lose the first 10 seconds of the video
+    #core.wait(10)
     
     # start the clock for timing
     globalClock = core.Clock()
@@ -71,6 +73,13 @@ if __name__ == '__main__':
     # start the loop to show the videos 
     while globalClock.getTime() < (screen1.duration+60):
         
+        if globalClock.getTime() >= (screen1.duration-0.5):
+            print "waiting for 60 sec"
+            core.wait(60)
+            print "\n\ndone running.\n\n"
+            core.quit()
+        
+        print globalClock.getTime()
         # draw the videos
         screen1.draw()
         if screen2:
