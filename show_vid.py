@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 from psychopy import visual, core, event
-import pyglet, sys
+import pyglet, sys, screen, argparse
 
 
 '''
@@ -10,84 +10,56 @@ run like `python show_vid.py path/video1 path/video2`
 the script will exit if you have fewer or more than two screens connected
 '''
 
-class Screen:
+if __name__ == '__main__':
     
-    '''
-    screen class! 
-    use it to define your screen and what video it will play
-    example: Screen("screen1", all_screens[0], /Users/lukereding/Documents/blender_files/transitivity/size/small_vs_large2.mp4, 0)
-    '''
+    # set up argument parser
+    ap = argparse.ArgumentParser()
+    ap.add_argument("-v1", "--video_1", help="path to the first video", required = True)
+    ap.add_argument("-v2", "--video_2", help="path to the second video", required = True)
+    args = vars(ap.parse_args())
     
-    def __init__(self, name, monitor, video_path, number):
-        self.name = name
-        self.width = monitor.width
-        self.height = monitor.height
-        self.window = visual.Window([monitor.width, monitor.height], units='norm', fullscr=False, screen=number)
-        self.video =  visual.MovieStim(self.window, video_path, flipVert=False)
-        self.video_width = int(self.video.format.width)
-        self.video_height = int(self.video.format.height)
-        self.video_path = video_path
-        self.duration = self.video.duration
+    # get information about the screens. print to the screen
+    all_screens = pyglet.window.get_platform().get_default_display().get_screens()
+    print all_screens
+
+    # define each monitor
+    screen1 = screen.Screen("screen1", all_screens[0], args['video_1'], 0)
+    screen2 = screen.Screen("screen2", all_screens[1], args['video_2'], 1)
+
+    # make sure there are two screens attached:
+    if len(all_screens) != 2:
+        sys.exit("\n\nyou need two screens connected to the computer. exiting.\n")
+
+    # print a bunch of stuff for the user
+    print screen1.print_monitor_size()
+    print screen2.print_monitor_size()
+    print screen1.print_video_size()
+    print screen2.print_video_size()
+    print screen1.print_duration()
+    print screen2.print_duration()
+
+    # start the clock for timing
+    globalClock = core.Clock()
+
+    # start the loop to show the videos 
+    while globalClock.getTime()<(screen1.duration+60):
+        # draw the videos
+        screen1.draw()
+        screen2.draw()
         
-    def print_monitor_size(self):
-        print "{} has height of {} and width of {}.".format(self.name, self.width, self.height)
-    
-    def print_video_size(self):
-        print " the video {} is {} x {}".format(self.video_path, self.video_height, self.video_width)
-    
-    def print_duration(self):
-        print "{} is {} s long".format(self.video_path, self.duration)
-    
-    def draw(self):
-        self.video.draw()
-    
-    def update(self):
-        self.window.update()
+        # if the trial is ended, let the user know:
+        if globalClock.getTime() > screen1.duration+10:
+            text = visual.TextStim(screen1.window, text="trial ended (!)", pos=(0,-0.6), alignVert='bottom', color='SlateGrey')
+        else:
+            text = visual.TextStim(screen1.window, text=str(screen1.duration - round(globalClock.getTime(),0)) + " seconds left in the video", pos=(0,-0.6), alignVert='bottom', color='SlateGrey')
+        
+        # draw the time, update the windows
+        text.draw()
+        screen1.update()
+        screen2.update()
+        
+        # if a key has been pressed, exit out of the program
+        if len(event.getKeys())>0: break
+        event.clearEvents()
 
-
-
-# get information about the screens. print to the screen
-all_screens = pyglet.window.get_platform().get_default_display().get_screens()
-print all_screens
-
-# define each monitor
-screen1 = Screen("screen1", all_screens[0], str(sys.argv[1]), 0)
-screen2 = Screen("screen2", all_screens[1], str(sys.argv[2]), 1)
-
-# make sure there are two screens attached:
-if len(all_screens) != 2:
-    sys.exit("\n\nyou need two screens connected to the computer. exiting.\n")
-
-# print a bunch of stuff for the user
-print screen1.print_monitor_size()
-print screen2.print_monitor_size()
-print screen1.print_video_size()
-print screen2.print_video_size()
-print screen1.print_duration()
-print screen2.print_duration()
-
-# start the clock for timing
-globalClock = core.Clock()
-
-# start the loop to show the videos 
-while globalClock.getTime()<(screen1.duration+60):
-    # draw the videos
-    screen1.draw()
-    screen2.draw()
-    
-    # if the trial is ended, let the user know:
-    if globalClock.getTime() > screen1.duration+10:
-        text = visual.TextStim(screen1.window, text="trial ended (!)", pos=(0,-0.6), alignVert='bottom', color='SlateGrey')
-    else:
-        text = visual.TextStim(screen1.window, text=str(screen1.duration - round(globalClock.getTime(),0)) + " seconds left in the video", pos=(0,-0.6), alignVert='bottom', color='SlateGrey')
-    
-    # draw the time, update the windows
-    text.draw()
-    screen1.update()
-    screen2.update()
-    
-    # if a key has been pressed, exit out of the program
-    if len(event.getKeys())>0: break
-    event.clearEvents()
-
-core.quit()
+    core.quit()
