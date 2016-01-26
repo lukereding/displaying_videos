@@ -8,20 +8,20 @@ LOG_FILE="/Users/lukereding/Desktop/results.log"
 # then you can get rid of the observer read in line below
 
 # explain what's going on to the user
-echo "\n\nthere are a couple of steps to using this program\n\nfirst you'll be asked to enter in some basic information about the trial. The script will randomly determine which videos get sent where based on the information you provide.\n\nThe script will then automatically start running the videos and the recording the video for tracking analysis later.\n\nWhen the trial is over, you will be prompted to enter in some more information about the fish, like its weight. Once you do this the trial is logged in a log file stored here: $LOG_FILE. At that point, the script will exit and you can start a new trial."
+echo -e "\n\nthere are a couple of steps to using this program\n\nfirst you'll be asked to enter in some basic information about the trial. The script will randomly determine which videos get sent where based on the information you provide.\n\nThe script will then automatically start running the videos and the recording the video for tracking analysis later.\n\nWhen the trial is over, you will be prompted to enter in some more information about the fish, like its weight. Once you do this the trial is logged in a log file stored here: $LOG_FILE. At that point, the script will exit and you can start a new trial.\n\n\n"
 
 
 # have the user enter in basic information about the trial
-echo "name of female:\t \c "
+echo -e "name of female:\t \c "
 read female
-echo "water temperature in the tank:\t \c "
+echo -e "water temperature in the tank:\t \c "
 read temperature
-echo "your name?:\t \c "
+echo -e "your name?:\t \c "
 read observer
 
 # find out whether this trial is binary or trinary
 while true; do
-    read -p "Binary (b) or trinary (t) trial?\t" bt
+    read -p "Binary (b) or trinary (t) trial?" bt
     case $bt in
         [Bb]* ) echo "binary trial "; trial_type=binary; break;;
         [Tt]* ) echo "trinary trial"; trial_type=trinary; break;;
@@ -34,7 +34,7 @@ if [ "$trial_type" == "binary" ]; then
     array=( $(echo "small;large" | sed 's,([^;]\(*\)[;$]),\1,g' | tr ";" "\n" | gshuf | tr "\n" " " ) )
     left_screen=${array[0]}
     right_screen=${array[1]}
-    middle screen="NULL"
+    middle_screen="NULL"
 elif [ "$trial_type" == "trinary" ]; then
     array=( $(echo "small;large;decoy" | sed 's,([^;]\(*\)[;$]),\1,g' | tr ";" "\n" | gshuf | tr "\n" " " ) )
     left_screen=${array[0]}
@@ -48,7 +48,7 @@ fi
 # error checking
 if [ $? -gt 0 ]; then
   echo "randomization of videos failed. aborting."
-  echo "randomization of videos failed.\n\nthe script was run for $SECONDS seconds" | mail -s "aborting script" lukereding@gmail.com
+  echo -e "randomization of videos failed.\n\nthe script was run for $SECONDS seconds" | mail -s "aborting script" lukereding@gmail.com
   exit 1
 fi
 
@@ -71,9 +71,9 @@ if [ $? -gt 0 ]; then
 fi
 
 # after trial is over, get the size of the fish
-echo "weight of female in grams: \c "
+echo -e "weight of female in grams: \c "
 read weight
-echo "the female weighs $weight grams."
+echo -e "the female weighs $weight grams."
 
 # email the log file to yourself for save-keeping
 cat $LOG_FILE | mail -s "log file: `date`" lukereding@gmail.com
@@ -85,6 +85,6 @@ if [ $? -gt 0 ]; then
   exit 1
 fi
 
-echo "\n\n\n\nthe script is done running. everything went according to plan."
+echo -e "\n\n\n\nthe script is done running. everything went according to plan."
 
 exit 0
