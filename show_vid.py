@@ -76,9 +76,7 @@ if __name__ == '__main__':
         if screen2:
             screen2.draw()
         
-        # if the trial is ended, let the user know:
-        if globalClock.getTime() < screen1.duration+10:
-            text = visual.TextStim(screen1.window, text=str(screen1.duration - round(globalClock.getTime(),0)) + " seconds left in the video", pos=(0,-0.6), alignVert='bottom', color='SlateGrey')
+        text = visual.TextStim(screen1.window, text=str(screen1.duration - round(globalClock.getTime(),0)) + " seconds left in the video", pos=(0,-0.6), alignVert='bottom', color='SlateGrey')
         
         # update the windows
         text.draw()
