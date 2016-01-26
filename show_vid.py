@@ -57,28 +57,28 @@ if __name__ == '__main__':
     except:
         print "\nonly using one screen\n"
     
-    # start the clock for timing
-    globalClock = core.Clock()
-    
     # let the user know how to quit
     print "\n\npress 'q' on the keyboard at any time during the video to exit"
+    
+    # start the clock for timing
+    globalClock = core.Clock()
 
     # start the loop to show the videos 
-    while globalClock.getTime()<(screen1.duration+60):
+    while globalClock.getTime() < (screen1.duration+60):
         
         # if the trial is ended, let the user know:
-        if globalClock.getTime() > screen1.duration+10:
+        if globalClock.getTime() > screen1.duration:
             text = visual.TextStim(screen1.window, text="trial ended (!)", pos=(0,-0.6), alignVert='bottom', color='SlateGrey')
         else:
             text = visual.TextStim(screen1.window, text=str(screen1.duration - round(globalClock.getTime(),0)) + " seconds left in the video", pos=(0,-0.6), alignVert='bottom', color='SlateGrey')
         
-        # draw the videos
+        # draw the videos and text
+        text.draw()
         screen1.draw()
         if screen2:
             screen2.draw()
         
-        # draw the time, update the windows
-        text.draw()
+        # update the windows
         screen1.update()
         if screen2:
             screen2.update()
