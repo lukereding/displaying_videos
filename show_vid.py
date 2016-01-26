@@ -94,7 +94,7 @@ if __name__ == '__main__':
         
         # if a key has been pressed, exit out of the program
         if len(event.getKeys(keyList="q"))>0:
-            break
+            sys.exit(5)
         event.clearEvents()
 
     core.quit()
