@@ -31,6 +31,7 @@ if __name__ == '__main__':
             print "\n\nlooks like the video path doesn't point to a valid file. exiting.\n\n"
             sys.exit(1)
     else:
+        screen2 = True
         # make sure the videos exists
         if not os.path.isfile(args['video_1']) or not os.path.isfile(args['video_2']):
             print "\n\n\none of the videos doesn't exist. make sure you enter the path to the videos correctly. exiting the script.\n\n"
