@@ -34,4 +34,3 @@ class Screen:
     
     def update(self):
         self.window.update()
-screens
