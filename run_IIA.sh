@@ -23,11 +23,13 @@ read observer
 while true; do
     read -p "Binary (b) or trinary (t) trial?" bt
     case $bt in
-        [Bb]* ) echo "binary trial "; trial_type=binary; break;;
-        [Tt]* ) echo "trinary trial"; trial_type=trinary; break;;
+        [Bb]* ) echo "binary trial "; trial_type='binary'; break;;
+        [Tt]* ) echo "trinary trial"; trial_type='trinary'; break;;
         * ) echo "Please answer b or t.";;
     esac
 done
+
+echo trial -- $trial_type
 
 # randomize which video goes to what monitor
 if [ "$trial_type" == "binary" ]; then
@@ -35,7 +37,7 @@ if [ "$trial_type" == "binary" ]; then
     left_screen=${array[0]}
     right_screen=${array[1]}
     middle_screen="NULL"
-elif [ "$trial_type" == "trinary" ]; then
+elif [  "$trial_type" == "trinary" ]; then
     array=( $(echo "small;large;decoy" | sed 's,([^;]\(*\)[;$]),\1,g' | tr ";" "\n" | gshuf | tr "\n" " " ) )
     left_screen=${array[0]}
     right_screen=${array[1]}
@@ -63,11 +65,14 @@ else
 fi
 
 # execute the python code and wait
-if ["$trial_type" == "binary" ]; then
-    python show_vid.py -v1 $left_screen.mp4 -v2 $right_screen.mp4; wait
+if [ "$trial_type" == "binary" ]; then
+    python show_vid.py -v1 "$left_screen"".mp4" -v2 "$right_screen"".mp4" &
+    wait
 else
-    python show_vid.py -v1 $left_screen.mp4 -v2 $right_screen.mp4 &
-    ssh $mini1 cd ~/Documents/displaying_videos/; python show_vid.py -v1 $middle_screen.mp4 &
+    echo "cd /Users/lukereding/Documents/displaying_videos; ls -la; python show_vid.py -v1  "$middle_screen"".mp4" &" | ssh $mini1 /bin/bash &
+    python show_vid.py -v1 "$left_screen"".mp4" -v2 "$right_screen"".mp4" &
+    # ssh $mini1 python show_vid.py -v1 "$middle_screen"".mp4" &
+    #ssh $mini1 cd ~/Documents/displaying_videos/; python show_vid.py -v1 "$middle_screen"".mp4" &
     wait
 fi
 
