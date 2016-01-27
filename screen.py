@@ -1,4 +1,4 @@
-import pyglet
+import pyglet, sys
 from psychopy import visual, core, event
 
 class Screen:
@@ -34,3 +34,12 @@ class Screen:
     
     def update(self):
         self.window.update()
+
+
+def cleanup():
+    '''
+    cleanup function to be called if a KeyboardInterrupt is raised
+    '''
+    print "control C was pressed. aborting script and cleaning up monitors."
+    core.quit()
+    sys.exit(10)
