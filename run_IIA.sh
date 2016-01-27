@@ -1,15 +1,32 @@
 #!/usr/bin/env bash
 
-# define location of log file for the trials
-LOG_FILE="/Users/lukereding/Desktop/results.log"
+# I use this script to run IIA trials
+# it asks the user for useful things, runs scripts that need to be run, etc.
+# it does a lot of funny things.
+# one of the funny things it does is creates a 'job file' that gets passed at the `at` command
+# this is a workaround for the fact 
 
-# optional, if you create a separate account on your computer:
-#test "$(whoami)" != 'student' && (echo try again logged in as a student; exit 1)
-# then you can get rid of the observer read in line below
+# define location of log file for the trials and the user name and ip address of the second computer
+LOG_FILE="/Users/lukereding/Desktop/results.log"
+mini1=lukereding@10.146.163.170
+
+# what do to if the user hits control +c during the script execution
+# trap ctrl-c and call ctrl_c()
+trap 'killall' INT
+
+killall() {
+    trap '' INT TERM     # ignore INT and TERM while shutting down
+    echo "**** Shutting down... ****"     # added double quotes
+    kill -TERM 0         # fixed order, send TERM not INT
+    # kill process on second computer
+    echo "kill $(ps aux | grep '[p]ython' | awk '{print $2}')" | ssh $mini1 /bin/bash &
+    wait
+    echo DONE
+    exit
+}
 
 # explain what's going on to the user
 echo -e "\n\nthere are a couple of steps to using this program\n\nfirst you'll be asked to enter in some basic information about the trial. The script will randomly determine which videos get sent where based on the information you provide.\n\nThe script will then automatically start running the videos and the recording the video for tracking analysis later.\n\nWhen the trial is over, you will be prompted to enter in some more information about the fish, like its weight. Once you do this the trial is logged in a log file stored here: $LOG_FILE. At that point, the script will exit and you can start a new trial.\n\n\n"
-
 
 # have the user enter in basic information about the trial
 echo -e "name of female:\t \c "
@@ -67,10 +84,12 @@ fi
 # execute the python code and wait
 if [ "$trial_type" == "binary" ]; then
     python show_vid.py -v1 "$left_screen"".mp4" -v2 "$right_screen"".mp4" &
+    echo $!
     wait
 else
-    echo "cd /Users/lukereding/Documents/displaying_videos; ls -la; python show_vid.py -v1  "$middle_screen"".mp4" &" | ssh $mini1 /bin/bash &
-    python show_vid.py -v1 "$left_screen"".mp4" -v2 "$right_screen"".mp4" &
+    echo "cd `pwd` && sleep 10 && python show_vid.py -v1 "$middle_screen"".mp4"" | ssh $mini1 /bin/bash &
+    sleep 10 && python show_vid.py -v1 "$left_screen"".mp4" -v2 "$right_screen"".mp4" &
+    echo $!
     # ssh $mini1 python show_vid.py -v1 "$middle_screen"".mp4" &
     #ssh $mini1 cd ~/Documents/displaying_videos/; python show_vid.py -v1 "$middle_screen"".mp4" &
     wait
