@@ -75,7 +75,7 @@ if __name__ == '__main__':
         
         try:
         
-            if globalClock.getTime() >= (screen1.duration-0.5):
+            if globalClock.getTime() >= (screen1.duration-0.8):
                 print "waiting for 60 sec"
                 core.wait(60)
                 print "\n\ndone running.\n\n"
