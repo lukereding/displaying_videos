@@ -80,7 +80,7 @@ if [ "$trial_type" == "binary" ]; then
     # show the videos
     python show_vid.py -v1 "$left_screen"".mp4" -v2 "$right_screen"".mp4" &
     # record the trial
-    echo "ffmpeg -f avfoundation -video_size 1280x720 -framerate 10 -i "Log:none" -crf 28 -vcodec libx264 -y -t 1260 "$female"_"$trial_type"".avi" || echo "video failed"" | ssh $mini1 /bin/bash &
+    echo "ffmpeg -f avfoundation -video_size 1280x720 -framerate 10 -i "Log:none" -crf 28 -vcodec libx264 -y -t 1260  ~/Desktop/"$female"_"$trial_type"".avi" || echo "video failed"" | ssh $mini1 /bin/bash &
     echo $!
     wait
 else
@@ -88,7 +88,7 @@ else
     sleep 10 && python show_vid.py -v1 "$left_screen"".mp4" -v2 "$right_screen"".mp4" &
     # record the trial
     ## TESTING THIS LINE
-    echo "sleep 14; ffmpeg -f avfoundation -video_size 1280x720 -framerate 10 -i "Log:none" -crf 28 -vcodec libx264 -y -t 1260 "$female"_"$trial_type"".avi" || echo "video failed"" | ssh $mini1 /bin/bash &
+    echo "sleep 14; ffmpeg -f avfoundation -video_size 1280x720 -framerate 10 -i "Log:none" -crf 28 -vcodec libx264 -y -t 1260 ~/Desktop/"$female"_"$trial_type"".avi" || echo "video failed"" | ssh $mini1 /bin/bash &
     echo $!
     # ssh $mini1 python show_vid.py -v1 "$middle_screen"".mp4" &
     #ssh $mini1 cd ~/Documents/displaying_videos/; python show_vid.py -v1 "$middle_screen"".mp4" &
