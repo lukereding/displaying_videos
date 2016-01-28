@@ -19,7 +19,7 @@ killall() {
     echo "**** Shutting down... ****"     # added double quotes
     kill -TERM 0         # fixed order, send TERM not INT
     # kill process on second computer
-    echo "kill $(ps aux | grep '[p]ython' | awk '{print $2}')" | ssh $mini1 /bin/bash
+    echo "kill $(ps aux | grep 'python' | awk '{print $2}')" | ssh $mini1 /bin/bash
     wait
     echo DONE
     exit
