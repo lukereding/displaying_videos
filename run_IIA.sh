@@ -24,7 +24,7 @@ killall() {
     # kill process on second computer
     echo "kill $(ps aux | grep 'python' | awk '{print $2}')" | ssh $mini1 /bin/bash
     wait
-    echo DONE
+    echo TRIAL KILLED :---()
     exit
 }
 
