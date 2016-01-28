@@ -5,6 +5,9 @@
 # it appends line to a log file that log the temperature of thank tank, female's name, etc.
 # I am emailed whenever an error is generated or at the end of trial trial
 
+# to do:
+## check log file to make sure the female / trial type combination hasn't been made yet
+
 # define location of log file for the trials and the user name and ip address of the second computer
 LOG_FILE="/Users/lukereding/Desktop/results.log"
 mini1=lukereding@10.146.163.170
@@ -73,12 +76,17 @@ fi
 
 # execute the python code and wait
 if [ "$trial_type" == "binary" ]; then
+    # show the videos
     python show_vid.py -v1 "$left_screen"".mp4" -v2 "$right_screen"".mp4" &
+    # record the trial
+    echo "ffmpeg -f avfoundation -video_size 1280x720 -framerate 10 -i "Log:none" -crf 28 -vcodec libx264 -y -t 1260 "$female"_"$trial_type"".avi" || echo "video failed"" | ssh $mini1 /bin/bash &
     echo $!
     wait
 else
     echo "cd `pwd` && sleep 10 && python show_vid.py -v1 "$middle_screen"".mp4"" | ssh $mini1 /bin/bash &
     sleep 10 && python show_vid.py -v1 "$left_screen"".mp4" -v2 "$right_screen"".mp4" &
+    # record the trial
+    echo "ffmpeg -f avfoundation -video_size 1280x720 -framerate 10 -i "Log:none" -crf 28 -vcodec libx264 -y -t 1260 "$female"_"$trial_type"".avi" || echo "video failed"" | ssh $mini1 /bin/bash &
     echo $!
     # ssh $mini1 python show_vid.py -v1 "$middle_screen"".mp4" &
     #ssh $mini1 cd ~/Documents/displaying_videos/; python show_vid.py -v1 "$middle_screen"".mp4" &
@@ -98,7 +106,7 @@ read weight
 # repeat the trial information back to the user, make sure everything looks good
 echo -e "here's what you entered:\n\n"
 echo -e "female\tdate\ttemperature\tobserver\ttrial_type\tleft_screen\tright_screen\tmiddle_screen"
-echo "$female\t$date\t$temperature\t$observer\t$trial_type\t$left_screen\t$right_screen\t$middle_screen"
+echo -e "$female\t$date\t$temperature\t$observer\t$trial_type\t$left_screen\t$right_screen\t$middle_screen"
 
 # ask the user to verify the information
 while true; do
