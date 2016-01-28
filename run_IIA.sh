@@ -7,6 +7,7 @@
 
 # to do:
 ## check log file to make sure the female / trial type combination hasn't been made yet
+## check to make sure a number is entered if a number is required
 
 # define location of log file for the trials and the user name and ip address of the second computer
 LOG_FILE="/Users/lukereding/Desktop/results.log"
@@ -41,7 +42,7 @@ read observer
 
 # find out whether this trial is binary or trinary
 while true; do
-    read -p "Binary (b) or trinary (t) trial?" bt
+    read -p "Binary or trinary trial? Type in 'b' or 't' and then press enter." bt
     case $bt in
         [Bb]* ) echo "binary trial "; trial_type='binary'; break;;
         [Tt]* ) echo "trinary trial"; trial_type='trinary'; break;;
@@ -86,7 +87,8 @@ else
     echo "cd `pwd` && sleep 10 && python show_vid.py -v1 "$middle_screen"".mp4"" | ssh $mini1 /bin/bash &
     sleep 10 && python show_vid.py -v1 "$left_screen"".mp4" -v2 "$right_screen"".mp4" &
     # record the trial
-    echo "ffmpeg -f avfoundation -video_size 1280x720 -framerate 10 -i "Log:none" -crf 28 -vcodec libx264 -y -t 1260 "$female"_"$trial_type"".avi" || echo "video failed"" | ssh $mini1 /bin/bash &
+    ## TESTING THIS LINE
+    echo "sleep 14; ffmpeg -f avfoundation -video_size 1280x720 -framerate 10 -i "Log:none" -crf 28 -vcodec libx264 -y -t 1260 "$female"_"$trial_type"".avi" || echo "video failed"" | ssh $mini1 /bin/bash &
     echo $!
     # ssh $mini1 python show_vid.py -v1 "$middle_screen"".mp4" &
     #ssh $mini1 cd ~/Documents/displaying_videos/; python show_vid.py -v1 "$middle_screen"".mp4" &
@@ -122,11 +124,11 @@ done
 # save a log file of the trial
 #append row if the file already exists
 if [ -f $LOG_FILE ]; then
-    echo "$female,`date`,$temperature,$observer,$trial_type,$left_screen,$right_screen,$middle_screen,$looks_good" >> $LOG_FILE
+    echo "$female,$date,$temperature,$observer,$trial_type,$left_screen,$right_screen,$middle_screen,$looks_good" >> $LOG_FILE
 else
     # then it's the first trial first trial --
     echo "female,date,temperature,observer,trial_type,left_screen,right_screen,middle_screen,looks_good" > $LOG_FILE
-    echo "$female,`date`,$temperature,$observer,$trial_type,$left_screen,$right_screen,$middle_screen,$looks_good" > $LOG_FILE
+    echo "$female,$date,$temperature,$observer,$trial_type,$left_screen,$right_screen,$middle_screen,$looks_good" > $LOG_FILE
 fi
 
 # email the log file to yourself for save-keeping
@@ -134,11 +136,11 @@ cat $LOG_FILE | mail -s "log file: `date`" lukereding@gmail.com
 
 # Log errors if the file doesn't send
 if [ $? -gt 0 ]; then
-  echo "Failed to email log file. Let Luke know."
+  echo -e "\n\n\n\tFailed to email log file. Let Luke know.\n\n"
   echo "Failed to email log file" | mail -s "failed to email log file" lukereding@gmail.com
   exit 1
 fi
 
-echo -e "\n\n\n\nthe script is done running. everything went according to plan."
+echo -e "\n\n\n\n\tthe script is done running. everything went according to plan."
 
 exit 0
