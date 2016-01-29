@@ -7,7 +7,6 @@
 
 # to do:
 ## check log file to make sure the female / trial type combination hasn't been made yet
-## check to make sure a number is entered if a number is required
 
 # define location of log file for the trials and the user name and ip address of the second computer
 LOG_FILE="/Users/lukereding/Desktop/results.log"
@@ -37,6 +36,11 @@ echo -e "name of female:\t \c "
 read female
 echo -e "water temperature in the tank:\t \c "
 read temperature
+while [[ $temperature == *[!0-9.]* ]]; do
+    echo "you typed in "$temperature" for the temperaure. please try typing it in again using only numbers and periods:"
+    read temperature
+done
+
 echo -e "your name?:\t \c "
 read observer
 
@@ -104,10 +108,14 @@ fi
 # after trial is over, get the size of the fish
 echo -e "weight of female in grams: \c "
 read weight
+while [[ $weight == *[!0-9.]* ]]; do
+    echo "you typed in "$weight" for the weight. please try typing it in again using only numbers and periods:"
+    read weight
+done
 
 # repeat the trial information back to the user, make sure everything looks good
 echo -e "here's what you entered:\n\n"
-echo -e "female\tdate\ttemperature\tobserver\ttrial_type\tleft_screen\tright_screen\tmiddle_screen"
+echo -e "female\tdate\ttemperature\t\tobserver\ttrial_type\tleft_screen\tright_screen\tmiddle_screen"
 echo -e "$female\t$date\t$temperature\t$observer\t$trial_type\t$left_screen\t$right_screen\t$middle_screen"
 
 # ask the user to verify the information
@@ -115,7 +123,7 @@ while true; do
     read -p "If all that looks good to you, press 'y'. Otherwise, press 'n' and make a note of the error." yn
     case $yn in
         [Yy]* ) echo "it checks out "; looks_good='yes'; break;;
-        [Nn]* ) echo "please make a note of the error"; loos_good='no'; break;;
+        [Nn]* ) echo "please make a note of the error"; looks_good='no'; break;;
         * ) echo "Please type 'y' or 'n'";;
     esac
 done
