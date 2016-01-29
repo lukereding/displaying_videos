@@ -1,8 +1,12 @@
 #!/usr/bin/python
 
+# this is to ensure the scripts start around the same time...
+from time import time
+start = time()
+
 from psychopy import visual, core, event
 import pyglet, sys, screen, argparse, os.path
-from time import sleep
+
 '''
 python script to run two different videos on two separate screens attached to the computer.
 run like `python show_vid.py path/video1 path/video2`
@@ -13,10 +17,12 @@ ize/small_vs_large1.mp4`
 '''
 
 if __name__ == '__main__':
-    # to help with timing things between the two computers:
-    sleep(5)
+    
     # get information about the monitors hooked up to the computer
     all_screens = pyglet.window.get_platform().get_default_display().get_screens()
+    
+    while(time() < start + 10):
+        pass
     
     # set up argument parser
     ap = argparse.ArgumentParser()
