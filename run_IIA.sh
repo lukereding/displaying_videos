@@ -84,7 +84,7 @@ if [ "$trial_type" == "binary" ]; then
     # show the videos
     python show_vid.py -v1 "$left_screen"".mp4" -v2 "$right_screen"".mp4" &
     # record the trial
-    echo "ffmpeg -f avfoundation -video_size 1280x720 -framerate 10 -i "Log:none" -crf 28 -vcodec libx264 -y -t 1260  ~/Desktop/"$female"_"$trial_type"".avi" || echo "video failed"" | ssh $mini1 /bin/bash &
+    echo "sleep 5; ffmpeg -f avfoundation -video_size 1280x720 -framerate 10 -i "Log:none" -crf 28 -vcodec libx264 -y -t 1260  ~/Desktop/"$female"_"$trial_type"".avi" || echo "video failed"" | ssh $mini1 /bin/bash &
     echo $!
     wait
 else
@@ -116,7 +116,7 @@ done
 # repeat the trial information back to the user, make sure everything looks good
 echo -e "here's what you entered:\n\n"
 echo -e "female\tdate\ttemperature\t\tobserver\ttrial_type\tleft_screen\tright_screen\tmiddle_screen"
-echo -e "$female\t$date\t$temperature\t$observer\t$trial_type\t$left_screen\t$right_screen\t$middle_screen"
+echo -e "$female\t$date\t\t$temperature\t$observer\t$trial_type\t$left_screen\t$right_screen\t$middle_screen"
 
 # ask the user to verify the information
 while true; do
