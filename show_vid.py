@@ -82,7 +82,7 @@ if __name__ == '__main__':
         
         try:
         
-            if globalClock.getTime() >= (screen1.duration-0.8):
+            if globalClock.getTime() >= (screen1.duration-0.3):
                 print "waiting for 60 sec"
                 core.wait(60)
                 print "\n\ndone showing the videos.\n\n"
@@ -93,10 +93,11 @@ if __name__ == '__main__':
             if screen2:
                 screen2.draw()
             
-            text = visual.TextStim(screen1.window, text=str(screen1.duration - round(globalClock.getTime(),0)) + " seconds left in the video", pos=(0,-0.6), alignVert='bottom', color='SlateGrey')
+            # to draw text:
+            #text = visual.TextStim(screen1.window, text=str(screen1.duration - round(globalClock.getTime(),0)) + " seconds left in the video", pos=(0,-0.6), alignVert='bottom', color='SlateGrey')
             
             # update the windows
-            text.draw()
+            #text.draw()
             screen1.update()
             if screen2:
                 screen2.update()
