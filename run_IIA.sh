@@ -10,7 +10,7 @@
 
 # define location of log file for the trials and the user name and ip address of the second computer
 LOG_FILE="/Users/lukereding/Desktop/results.log"
-mini1=lukereding@10.146.163.170
+mini1=lukereding@10.146.115.95
 date=`date`
 
 # what do to if the user hits control +c during the script execution
@@ -75,7 +75,7 @@ fi
 # error checking
 if [ $? -gt 0 ]; then
   echo "randomization of videos failed. aborting."
-  echo -e "randomization of videos failed.\n\nthe script was run for $SECONDS seconds" | mail -s "aborting script" lukereding@gmail.com
+  echo -e "randomization of videos failed.\n\n" | mail -s "aborting script" lukereding@gmail.com
   exit 1
 fi
 
@@ -84,14 +84,14 @@ if [ "$trial_type" == "binary" ]; then
     # show the videos
     python show_vid.py -v1 "$left_screen"".mp4" -v2 "$right_screen"".mp4" &
     # record the trial
-    echo "sleep 5; ffmpeg -f avfoundation -video_size 1280x720 -framerate 10 -i "Log:none" -crf 28 -vcodec libx264 -y -t 1260  ~/Desktop/"$female"_"$trial_type"".avi" || echo "video failed"" | ssh $mini1 /bin/bash &
+    echo "sleep 5; ffmpeg -f avfoundation -video_size 1280x720 -framerate 10 -i "Mirco:none" -crf 28 -vcodec libx264 -y -t 1260  ~/Desktop/"$female"_"$trial_type"".avi" || echo "video failed"" | ssh $mini1 /bin/bash &
     wait
 else
     echo "cd `pwd` && sleep 9 && python show_vid.py -v1 "$middle_screen"".mp4"" | ssh $mini1 /bin/bash &
     sleep 10 && python show_vid.py -v1 "$left_screen"".mp4" -v2 "$right_screen"".mp4" &
     # record the trial
     ## TESTING THIS LINE
-    echo "sleep 16; ffmpeg -f avfoundation -video_size 1280x720 -framerate 10 -i "Log:none" -crf 28 -vcodec libx264 -y -t 1260 ~/Desktop/"$female"_"$trial_type"".avi" || echo "video failed"" | ssh $mini1 /bin/bash &
+    echo "sleep 16; ffmpeg -f avfoundation -video_size 1280x720 -framerate 10 -i "Micro:none" -crf 28 -vcodec libx264 -y -t 1260 ~/Desktop/"$female"_"$trial_type"".avi" || echo "video failed"" | ssh $mini1 /bin/bash &
     # ssh $mini1 python show_vid.py -v1 "$middle_screen"".mp4" &
     #ssh $mini1 cd ~/Documents/displaying_videos/; python show_vid.py -v1 "$middle_screen"".mp4" &
     wait
