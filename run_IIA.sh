@@ -10,7 +10,7 @@
 
 # define location of log file for the trials and the user name and ip address of the second computer
 LOG_FILE="/Users/lukereding/Desktop/results.log"
-mini1=lukereding@10.146.115.95
+mini1=lukereding@128.83.192.234
 date=`date`
 
 # what do to if the user hits control +c during the script execution
