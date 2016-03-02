@@ -84,6 +84,8 @@ fi
 SECONDS=`date +%s`
 START_TIME=$(( SECONDS + 15 ))
 
+echo trial starting at `date -r $SECONDS '+%H:%M:%S'`
+
 # execute the python code and wait
 if [ "$trial_type" == "binary" ]; then
     # show the videos
