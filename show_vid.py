@@ -1,27 +1,24 @@
 #!/usr/bin/python
 
-# this is to ensure the scripts start around the same time...
 from time import time
-
 from psychopy import visual, core, event
 import pyglet, sys, screen, argparse, os.path
 
 '''
 python script to run two different videos on two separate screens attached to the computer.
-run like `python show_vid.py path/video1 path/video2`
+run like `python show_vid.py -v1 path/video1 path/video2`
 
 the second video argument is actually optional; if omitted, it'll just show one video on whatever your main monitor is
 example: `python show_vid.py -v1 /Users/lukereding/Documents/blender_files/transitivity/s
 ize/small_vs_large1.mp4`
+
+the -t or --time argument is important for tiing when trying to synch video playback between two computers. the script will be executed when the seconds since epoch gets to the seconds given by --time
 '''
 
 if __name__ == '__main__':
 
     # get information about the monitors hooked up to the computer
     all_screens = pyglet.window.get_platform().get_default_display().get_screens()
-
-    while(time() < start + 10):
-        pass
 
     # set up argument parser
     ap = argparse.ArgumentParser()
