@@ -9,11 +9,14 @@ import pyglet, sys, screen, argparse, os.path
 
 '''
 python script to run two different videos on two separate screens attached to the computer.
-run like `python show_vid.py path/video1 path/video2`
+run like `python show_vid.py -v1 path/video1 path/video2`
 
 the second video argument is actually optional; if omitted, it'll just show one video on whatever your main monitor is
 example: `python show_vid.py -v1 /Users/lukereding/Documents/blender_files/transitivity/s
 ize/small_vs_large1.mp4`
+
+the -t or --time arugment is important for timing when trying to synch video playback between two computers. The script will be executed when the seconds since epoch gets to the seconds given by --time
+
 '''
 
 if __name__ == '__main__':
@@ -21,14 +24,14 @@ if __name__ == '__main__':
     # get information about the monitors hooked up to the computer
     all_screens = pyglet.window.get_platform().get_default_display().get_screens()
     
-    while(time() < start + 10):
-        pass
-    
     # set up argument parser
     ap = argparse.ArgumentParser()
     ap.add_argument("-v1", "--video_1", help="path to the first video", required = True)
     ap.add_argument("-v2", "--video_2", help="path to the second video", required = False)
+    ap.add_argument("-t", "--time", help="current time in seconds since epoch", required = False, type=int, default = time())
+    
     args = vars(ap.parse_args())
+    start_time = args['video_2']
     
     if args['video_2'] is None:
         print "\n\nyou've only entered one video name. Will only show one video.\n\n"
@@ -74,6 +77,10 @@ if __name__ == '__main__':
     # if you uncomment this, no weird intro period to the video, but you lose the first 10 seconds of the video
     #core.wait(10)
     
+    # wait until 15 seconds after the script has started. This ensures that two computers start playing the videos at the same time.
+    while(int(time.time()) < start_time):
+        pass
+    
     # start the clock for timing
     globalClock = core.Clock()
 
@@ -110,5 +117,6 @@ if __name__ == '__main__':
                 
         except KeyboardInterrupt:
             screen.cleanup()
+            core.quit()
 
     core.quit()
