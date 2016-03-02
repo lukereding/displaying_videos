@@ -2,7 +2,6 @@
 
 # this is to ensure the scripts start around the same time...
 from time import time
-start = time()
 
 from psychopy import visual, core, event
 import pyglet, sys, screen, argparse, os.path
@@ -28,7 +27,10 @@ if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument("-v1", "--video_1", help="path to the first video", required = True)
     ap.add_argument("-v2", "--video_2", help="path to the second video", required = False)
+    ap.add_argument("-t", "--time", help="current time in seconds since epoch", required = False, type=int, default = time())
+
     args = vars(ap.parse_args())
+    start_time = args['time’]
 
     if args['video_2'] is None:
         print "\n\nyou've only entered one video name. Will only show one video.\n\n"
@@ -68,7 +70,7 @@ if __name__ == '__main__':
         print "\nonly using one screen\n"
 
     # let the user know how to quit
-    print "\n\npress 'q' on the keyboard at any time during the video to exit\nnote that this will void the trial. exercise caution!"
+    print "\n\npress Control + C on the keyboard to kill the videos and recording and end the trial.\nnote that this will void the trial. exercise caution!"
 
     screen1.draw()
     if screen2:
@@ -76,6 +78,10 @@ if __name__ == '__main__':
 
     # if you uncomment this, no weird intro period to the video, but you lose the first 10 seconds of the video
     #core.wait(10)
+
+    # wait until 15 seconds after the script has started. This ensures that two computers start playing the videos at the same time.
+    while(int(time()) < start_time):
+        pass
 
     # start the clock for timing
     globalClock = core.Clock()
