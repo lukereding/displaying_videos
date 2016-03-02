@@ -27,7 +27,7 @@ if __name__ == '__main__':
     ap.add_argument("-t", "--time", help="current time in seconds since epoch", required = False, type=int, default = time())
 
     args = vars(ap.parse_args())
-    start_time = args['time’]
+    start_time = args['time']
 
     if args['video_2'] is None:
         print "\n\nyou've only entered one video name. Will only show one video.\n\n"
