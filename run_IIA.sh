@@ -10,7 +10,7 @@
 
 # define location of log file for the trials and the user name and ip address of the second computer
 LOG_FILE="/Users/lukereding/Desktop/results.log"
-mini1=lukereding@10.146.115.95
+mini1=lukereding@128.83.192.234
 date=`date`
 
 # what do to if the user hits control +c during the script execution
@@ -115,8 +115,8 @@ done
 
 # repeat the trial information back to the user, make sure everything looks good
 echo -e "here's what you entered:\n\n"
-echo -e "female\tdate\ttemperature\t\tobserver\ttrial_type\tleft_screen\tright_screen\tmiddle_screen"
-echo -e "$female\t$date\t\t\t\t$temperature\t$observer\t$trial_type\t$left_screen\t$right_screen\t$middle_screen"
+echo -e "female\tdate\t\t\t\ttemperature\t\tobserver\ttrial_type\tleft_screen\tright_screen\tmiddle_screen"
+echo -e "$female\t$date\t$temperature\t$observer\t$trial_type\t$left_screen\t$right_screen\t$middle_screen"
 
 # ask the user to verify the information
 while true; do
