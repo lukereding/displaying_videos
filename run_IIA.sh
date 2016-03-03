@@ -85,7 +85,7 @@ elif [  "$trial_type" == "trinary" ]; then
     left_screen=${array[0]}
     right_screen=${array[1]}
     middle_screen=${array[2]}
-    echo right screen: $right_screen && echo middle screen: $middle_screen && left screen: echo $left_screen
+    echo right screen: $right_screen && echo middle screen: $middle_screen && echo left screen: $left_screen
 else
     echo "trial_type variable is not properly assigned"
     exit 1
