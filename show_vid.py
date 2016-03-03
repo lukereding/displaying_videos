@@ -84,16 +84,9 @@ if __name__ == '__main__':
     globalClock = core.Clock()
 
     # start the loop to show the videos
-    while globalClock.getTime() < (screen1.duration+60):
+    while globalClock.getTime() < (screen1.duration):
 
         try:
-
-            if globalClock.getTime() >= (screen1.duration-0.3):
-                print "waiting for 60 sec"
-                core.wait(60)
-                print "\n\ndone showing the videos.\n\n"
-                core.quit()
-
             # draw the videos
             screen1.draw()
             if screen2:
@@ -118,3 +111,5 @@ if __name__ == '__main__':
             screen.cleanup()
 
     core.quit()
+core.quit()
+sys.exit()
