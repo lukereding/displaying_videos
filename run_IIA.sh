@@ -62,11 +62,13 @@ if [ "$trial_type" == "binary" ]; then
     left_screen=${array[0]}
     right_screen=${array[1]}
     middle_screen="NULL"
+    echo $left_screen && echo $right_screen
 elif [  "$trial_type" == "trinary" ]; then
     array=( $(echo "small;large;decoy" | sed 's,([^;]\(*\)[;$]),\1,g' | tr ";" "\n" | gshuf | tr "\n" " " ) )
     left_screen=${array[0]}
     right_screen=${array[1]}
     middle_screen=${array[2]}
+    echo $right_screen && echo $middle_screen && echo $left_screen
 else
     echo "trial_type variable is not properly assigned"
     exit 1
@@ -79,21 +81,26 @@ if [ $? -gt 0 ]; then
   exit 1
 fi
 
-SECONDS_SINCE_EPOCH=`date +%s`
-START_TIME=$(( SECONDS_SINCE_EPOCH + 15 ))
+SECONDS=`date +%s`
+START_TIME=$(( SECONDS + 15 ))
+
+echo trial starting at `date -r $SECONDS '+%H:%M:%S'`
 
 # execute the python code and wait
 if [ "$trial_type" == "binary" ]; then
     # show the videos
-    python show_vid.py -v1 "$left_screen"".mp4" -v2 "$right_screen"".mp4" -t "$START_TIME" &
+    python show_vid.py -v1 "$left_screen"".mp4" -v2 "$right_screen"".mp4" &
     # record the trial
-    echo "sleep 14; ffmpeg -f avfoundation -video_size 1280x720 -framerate 10 -i "Mirco:none" -crf 28 -vcodec libx264 -y -t 1260  ~/Desktop/"$female"_"$trial_type"".avi" || echo "video failed"" | ssh $mini1 /bin/bash &
+    echo "sleep 5; ffmpeg -f avfoundation -video_size 1280x720 -framerate 10 -i "Micro:none" -crf 28 -vcodec libx264 -y -t 1260  ~/Desktop/"$female"_"$trial_type"".avi" || echo "video failed"" | ssh $mini1 /bin/bash &
     wait
 else
-    # show video on middle screen
-    echo "cd `pwd` && python show_vid.py -v1 "$middle_screen"".mp4" -t "$START_TIME"" | ssh $mini1 /bin/bash & python show_vid.py -v1 "$left_screen"".mp4" -v2 "$right_screen"".mp4" -t "$START_TIME" &
+    # show middle screen video
+    echo "cd `pwd` && python show_vid.py -v1 "$middle_screen"".mp4" -t "$START_TIME"" | ssh $mini1 /bin/bash &
+    # show the two other videos
+    python show_vid.py -v1 "$left_screen"".mp4" -v2 "$right_screen"".mp4" -t "$START_TIME" &
     # record the trial
-    echo "sleep 12; ffmpeg -f avfoundation -video_size 1280x720 -framerate 10 -i "Micro:none" -crf 28 -vcodec libx264 -y -t 1260 ~/Desktop/"$female"_"$trial_type"".avi" || echo "video failed"" | ssh $mini1 /bin/bash &
+    ## TESTING THIS LINE
+    echo "sleep 14; ffmpeg -f avfoundation -video_size 1280x720 -framerate 10 -i "Micro:none" -crf 28 -vcodec libx264 -y -t 1260 ~/Desktop/"$female"_"$trial_type"".avi" || echo "video failed"" | ssh $mini1 /bin/bash &
     # ssh $mini1 python show_vid.py -v1 "$middle_screen"".mp4" &
     #ssh $mini1 cd ~/Documents/displaying_videos/; python show_vid.py -v1 "$middle_screen"".mp4" &
     wait
@@ -115,8 +122,8 @@ done
 
 # repeat the trial information back to the user, make sure everything looks good
 echo -e "here's what you entered:\n\n"
-echo -e "female\tdate\ttemperature\t\tobserver\ttrial_type\tleft_screen\tright_screen\tmiddle_screen"
-echo -e "$female\t$date\t\t$temperature\t$observer\t$trial_type\t$left_screen\t$right_screen\t$middle_screen"
+echo -e "female\tdate\t\t\t\ttemperature\t\tobserver\ttrial_type\tleft_screen\tright_screen\tmiddle_screen"
+echo -e "$female\t$date\t$temperature\t$observer\t$trial_type\t$left_screen\t$right_screen\t$middle_screen"
 
 # ask the user to verify the information
 while true; do
