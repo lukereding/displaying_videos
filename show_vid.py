@@ -71,7 +71,7 @@ if __name__ == '__main__':
 
     # start the clock for timing
     globalClock = core.Clock()
-    
+
     screen1.draw()
     if screen2:
         screen2.draw()
@@ -85,35 +85,27 @@ if __name__ == '__main__':
 
     # start the loop to show the videos
     while globalClock.getTime() < (screen1.duration):
+        print str(globalClock.getTime())
+        print str(globalClock.getTime() < (screen1.duration))
+        # draw the videos
+        screen1.draw()
+        if screen2:
+            screen2.draw()
 
-        try:
-            print str(globalClock.getTime())
-            print str(globalClock.getTime() < (screen1.duration))
-            # draw the videos
-            screen1.draw()
-            if screen2:
-                screen2.draw()
+        # to draw text:
+        #text = visual.TextStim(screen1.window, text=str(screen1.duration - round(globalClock.getTime(),0)) + " seconds left in the video", pos=(0,-0.6), alignVert='bottom', color='SlateGrey')
 
-            # to draw text:
-            #text = visual.TextStim(screen1.window, text=str(screen1.duration - round(globalClock.getTime(),0)) + " seconds left in the video", pos=(0,-0.6), alignVert='bottom', color='SlateGrey')
+        # update the windows
+        #text.draw()
+        screen1.update()
+        if screen2:
+            screen2.update()
 
-            # update the windows
-            #text.draw()
-            screen1.update()
-            if screen2:
-                screen2.update()
-
-            # if a key has been pressed, exit out of the program
-            if len(event.getKeys(keyList="q"))>0:
-                event.clearEvents()
-                core.quit()
-                sys.exit(5)
-
-        except:
-            print "exceptional"
-            screen.cleanup()
+        # if a key has been pressed, exit out of the program
+        if len(event.getKeys(keyList="q"))>0:
+            event.clearEvents()
             core.quit()
-            sys.exit(1)
+            sys.exit(5)
     print "almost"
     core.quit()
     sys.exit(0)
