@@ -111,7 +111,7 @@ if [ "$trial_type" == "binary" ]; then
     # show the male videos
     python show_vid.py -v1 "$left_screen"".mp4" -v2 "$right_screen"".mp4" -t "$START_TIME" &
     # record the trial
-    echo "sleep 5; ffmpeg -f avfoundation -video_size 1280x720 -framerate 10 -i "Micro:none" -crf 28 -vcodec libx264 -y -t "$LENGTH_OF_VIDEOS"  ~/Desktop/"$female"_"$trial_type"".avi" || echo "video failed"" | ssh $mini1 /bin/bash &
+    echo "sleep 14; ffmpeg -f avfoundation -video_size 1280x720 -framerate 10 -i "Micro:none" -crf 28 -vcodec libx264 -y -t "$LENGTH_OF_VIDEOS"  ~/Desktop/"$female"_"$trial_type"".avi" || echo "video failed"" | ssh $mini1 /bin/bash &
     wait
 else
     # show middle screen video
