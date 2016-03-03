@@ -28,6 +28,15 @@ killall() {
     exit
 }
 
+# function to read in a test file as an array. from http://stackoverflow.com/questions/20294918/extract-file-contents-into-array-using-bash-scripting
+getArray() {
+    array=() # Create array
+    while IFS= read -r line # Read a line
+    do
+        array+=("$line") # Append line to the array
+    done < "$1"
+}
+
 # explain what's going on to the user
 echo -e "\n\nthere are a couple of steps to using this program\n\nfirst you'll be asked to enter in some basic information about the trial. The script will randomly determine which videos get sent to which monitor.\n\nThe script will then automatically start running the videos and the recording the video for tracking analysis later.\n\nWhen the trial is over, you will be prompted to enter in some more information about the fish, like its weight. Once you do this the trial is logged in a log file stored here: $LOG_FILE. At that point, the script will exit and you can start a new trial.\n\n\n"
 
@@ -43,6 +52,11 @@ done
 
 echo -e "your name?:\t \c "
 read observer
+
+# find out if there is a file called trinary_male_list; if not, create it
+if [ ! -f trinary_male_list ]; then
+    echo -e "large.mp4\nsmall.mp4\ndecoy.mp4" > trinary_male_list
+fi
 
 # find out whether this trial is binary or trinary
 while true; do
@@ -64,11 +78,14 @@ if [ "$trial_type" == "binary" ]; then
     middle_screen="NULL"
     echo $left_screen && echo $right_screen
 elif [  "$trial_type" == "trinary" ]; then
-    array=( $(echo "small;large;decoy" | sed 's,([^;]\(*\)[;$]),\1,g' | tr ";" "\n" | gshuf | tr "\n" " " ) )
+    # rotate the which male appears where by one (i.e. everyone moves 1 monitor to the left)
+    echo "`tail -1 trinary_male_list && head -2 trinary_male_list`" > trinary_male_list
+    # read in the resulting file as an array
+    getArray "trinary_male_list"
     left_screen=${array[0]}
     right_screen=${array[1]}
     middle_screen=${array[2]}
-    echo $right_screen && echo $middle_screen && echo $left_screen
+    echo right screen: $right_screen && echo middle screen: $middle_screen && left screen: echo $left_screen
 else
     echo "trial_type variable is not properly assigned"
     exit 1
@@ -84,7 +101,7 @@ fi
 SECONDS=`date +%s`
 START_TIME=$(( SECONDS + 15 ))
 
-echo trial starting at `date -r $SECONDS '+%H:%M:%S'`
+echo trial will begin at at `date -r $SECONDS '+%H:%M:%S'`
 
 # execute the python code and wait
 if [ "$trial_type" == "binary" ]; then
