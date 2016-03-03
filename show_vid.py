@@ -87,6 +87,7 @@ if __name__ == '__main__':
     while globalClock.getTime() < (screen1.duration):
 
         try:
+            print str(globalClock.getTime())
             print str(globalClock.getTime() < (screen1.duration))
             # draw the videos
             screen1.draw()
@@ -109,8 +110,11 @@ if __name__ == '__main__':
                 sys.exit(5)
 
         except:
+            print "exceptional"
             screen.cleanup()
             core.quit()
             sys.exit(1)
+    print "almost"
     core.quit()
     sys.exit(0)
+print "done."
