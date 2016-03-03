@@ -55,7 +55,7 @@ read observer
 
 # find out if there is a file called trinary_male_list; if not, create it
 if [ ! -f trinary_male_list ]; then
-    echo -e "large.mp4\nsmall.mp4\ndecoy.mp4" > trinary_male_list
+    echo -e "large\nsmall\ndecoy" > trinary_male_list
 fi
 
 # find out whether this trial is binary or trinary
@@ -85,7 +85,7 @@ elif [  "$trial_type" == "trinary" ]; then
     left_screen=${array[0]}
     right_screen=${array[1]}
     middle_screen=${array[2]}
-    echo right screen: $right_screen && echo middle screen: $middle_screen && left screen: echo $left_screen
+    echo right screen: $right_screen && echo middle screen: $middle_screen && echo left screen: $left_screen
 else
     echo "trial_type variable is not properly assigned"
     exit 1
