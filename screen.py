@@ -13,8 +13,7 @@ class Screen:
         self.name = name
         self.width = monitor.width
         self.height = monitor.height
-        self.window = visual.Window([monitor.width, monitor.height], units='norm', fullscr=False, screen=number)
-        self.window.mouseVisible = False
+        self.window = visual.Window([monitor.width, monitor.height], units='norm', fullscr=False, screen=number, allowGUI=False)
         self.video =  visual.MovieStim(self.window, video_path, flipVert=False)
         self.video_width = int(self.video.format.width)
         self.video_height = int(self.video.format.height)
