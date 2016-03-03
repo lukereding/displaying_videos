@@ -69,7 +69,15 @@ while true; do
     esac
 done
 
-echo trial -- $trial_type
+# find out whether this trial is redo or not
+while true; do
+    read -p "Is this a redo trial? Type in 'y' or 'n' and then press enter." yn
+    case $yn in
+        [Yy]* ) echo "it's a redo "; redo=''; break;;
+        [Nn]* ) echo "first time"; redo='redo'; break;;
+        * ) echo "Please answer y or n.";;
+    esac
+done
 
 # randomize which video goes to what monitor
 if [ "$trial_type" == "binary" ]; then
@@ -111,7 +119,7 @@ if [ "$trial_type" == "binary" ]; then
     # show the male videos
     python show_vid.py -v1 "$left_screen"".mp4" -v2 "$right_screen"".mp4" -t "$START_TIME" &
     # record the trial
-    echo "sleep 14; ffmpeg -f avfoundation -video_size 1280x720 -framerate 10 -i "Micro:none" -crf 28 -vcodec libx264 -y -t "$LENGTH_OF_VIDEOS"  ~/Desktop/"$female"_"$trial_type"".avi" || echo "video failed"" | ssh $mini1 /bin/bash &
+    echo "sleep 14; ffmpeg -f avfoundation -video_size 1280x720 -framerate 10 -i "Micro:none" -crf 28 -vcodec libx264 -y -t "$LENGTH_OF_VIDEOS"  ~/Desktop/"$female"_"$trial_type"_"$redo"".avi" || echo "video failed"" | ssh $mini1 /bin/bash &
     wait
 else
     # show middle screen video
@@ -120,7 +128,7 @@ else
     python show_vid.py -v1 "$left_screen"".mp4" -v2 "$right_screen"".mp4" -t "$START_TIME" &
     # record the trial
     ## TESTING THIS LINE
-    echo "sleep 14; ffmpeg -f avfoundation -video_size 1280x720 -framerate 10 -i "Micro:none" -crf 28 -vcodec libx264 -y -t "$LENGTH_OF_VIDEOS" ~/Desktop/"$female"_"$trial_type"".avi" || echo "video failed"" | ssh $mini1 /bin/bash &
+    echo "sleep 14; ffmpeg -f avfoundation -video_size 1280x720 -framerate 10 -i "Micro:none" -crf 28 -vcodec libx264 -y -t "$LENGTH_OF_VIDEOS" ~/Desktop/"$female"_"$trial_type"_"$redo"".avi" || echo "video failed"" | ssh $mini1 /bin/bash &
     # ssh $mini1 python show_vid.py -v1 "$middle_screen"".mp4" &
     #ssh $mini1 cd ~/Documents/displaying_videos/; python show_vid.py -v1 "$middle_screen"".mp4" &
     wait
