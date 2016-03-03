@@ -107,9 +107,9 @@ if __name__ == '__main__':
                 core.quit()
                 sys.exit(5)
 
-        except KeyboardInterrupt:
+        except:
             screen.cleanup()
-
-    core.quit()
+            core.quit()
+            sys.exit(1)
 core.quit()
-sys.exit()
+sys.exit(0)
