@@ -69,6 +69,9 @@ if __name__ == '__main__':
     # let the user know how to quit
     print "\n\npress Control + C on the keyboard to kill the videos and recording and end the trial.\nnote that this will void the trial. exercise caution!"
 
+    # start the clock for timing
+    globalClock = core.Clock()
+    
     screen1.draw()
     if screen2:
         screen2.draw()
@@ -79,9 +82,6 @@ if __name__ == '__main__':
     # wait until 15 seconds after the script has started. This ensures that two computers start playing the videos at the same time.
     while(int(time()) < start_time):
         pass
-
-    # start the clock for timing
-    globalClock = core.Clock()
 
     # start the loop to show the videos
     while globalClock.getTime() < (screen1.duration):
