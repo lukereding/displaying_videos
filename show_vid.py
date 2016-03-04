@@ -82,11 +82,10 @@ if __name__ == '__main__':
     # wait until 15 seconds after the script has started. This ensures that two computers start playing the videos at the same time.
     while(int(time()) < start_time):
         pass
-
+    
     # start the loop to show the videos
-    while globalClock.getTime() < (screen1.duration):
-        print str(globalClock.getTime())
-        print str(globalClock.getTime() < (screen1.duration))
+    # you need the `-0.2` in `screen1.duration-0.2` so that the video doesn't freeze at the end. the video will try to draw itself when there is nothing to draw
+    while globalClock.getTime() < (screen1.duration-0.2):
         # draw the videos
         screen1.draw()
         if screen2:
@@ -106,7 +105,6 @@ if __name__ == '__main__':
             event.clearEvents()
             core.quit()
             sys.exit(5)
-    print "almost"
+    print "done"
     core.quit()
     sys.exit(0)
-print "done."
