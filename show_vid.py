@@ -101,10 +101,10 @@ if __name__ == '__main__':
             screen2.update()
 
         # if a key has been pressed, exit out of the program
-        if len(event.getKeys(keyList="q"))>0:
-            event.clearEvents()
-            core.quit()
-            sys.exit(5)
+        if len(event.getKeys(keyList="p"))>0:
+            screen1.video.pause()
+            core.wait(10)
+            screen1.video.play()
     print "done"
     core.quit()
     sys.exit(0)
