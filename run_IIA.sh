@@ -52,8 +52,12 @@ while [[ $temperature == *[!0-9.]* ]]; do
     read temperature
 done
 
+say "the temperature is "$temperature" degrees."
+
 echo -e "your name?:\t \c "
 read observer
+
+say "hi "$observer""
 
 # find out if there is a file called trinary_male_list; if not, create it
 if [ ! -f trinary_male_list ]; then
@@ -121,7 +125,7 @@ if [ "$trial_type" == "binary" ]; then
     python show_vid.py -v1 "$left_screen"".mp4" -v2 "$right_screen"".mp4" -t "$START_TIME" &
     # record the trial
     echo "sleep 14; ffmpeg -f avfoundation -video_size 1280x720 -framerate 10 -i "Micro:none" -crf 28 -vcodec libx264 -y -t "$LENGTH_OF_VIDEOS"  ~/Desktop/"$female"_"$trial_type"_"$redo"".avi" || echo "video failed"" | ssh $mini1 /bin/bash &
-    say "make sure the blue light on the webcam is gone"
+    say "make sure the blue light comes on in a few seconds."
     wait
 else
     # show middle screen video
@@ -133,13 +137,14 @@ else
     echo "sleep 14; ffmpeg -f avfoundation -video_size 1280x720 -framerate 10 -i "Micro:none" -crf 28 -vcodec libx264 -y -t "$LENGTH_OF_VIDEOS" ~/Desktop/"$female"_"$trial_type"_"$redo"".avi" || echo "video failed"" | ssh $mini1 /bin/bash &
     # ssh $mini1 python show_vid.py -v1 "$middle_screen"".mp4" &
     #ssh $mini1 cd ~/Documents/displaying_videos/; python show_vid.py -v1 "$middle_screen"".mp4" &
-    say "make sure the blue light on the webcam is on"
+    say "make sure the blue light on the webcam comes on in a few seconds."
     wait
 fi
 
 if [ $? -gt 0 ]; then
   echo "problem with python script"
   echo "python script failed at `date`" | mail -s "python script failed" lukereding@gmail.com
+  echo "problem with the python script."
   exit 1
 fi
 
@@ -188,5 +193,7 @@ if [ $? -gt 0 ]; then
 fi
 
 echo -e "\n\n\n\n\tthe script is done running. everything went according to plan."
+
+say "trial ended"
 
 exit 0
