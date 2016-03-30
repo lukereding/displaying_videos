@@ -21,7 +21,7 @@ done
 SECONDS=`date +%s`
 START_TIME=$(( SECONDS + 15 ))
 
-echo acclimation will begin at at `date -r $SECONDS '+%H:%M:%S'`
+echo acclimation will begin at at `date -r $START_TIME '+%H:%M:%S'`
 
 # show the background60min/mp4 video on all three screens
 echo "cd `pwd` && python show_vid.py -v1 background60min.mp4 -t "$START_TIME"" | ssh $mini1 /bin/bash &
