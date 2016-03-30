@@ -56,7 +56,7 @@ read observer
 
 # find out if there is a file called trinary_male_list; if not, create it
 if [ ! -f trinary_male_list ]; then
-    echo -e "large\nsmall\ndecoy" > trinary_male_list
+    echo -e "large_vs_largeDecoy_trinary\nlargeDecoy_vs_small_trinary\nsmall_vs_large_trinary" > trinary_male_list
 fi
 
 # find out whether this trial is binary or trinary
@@ -81,7 +81,7 @@ done
 
 # randomize which video goes to what monitor
 if [ "$trial_type" == "binary" ]; then
-    array=( $(echo "small;large" | sed 's,([^;]\(*\)[;$]),\1,g' | tr ";" "\n" | gshuf | tr "\n" " " ) )
+    array=( $(echo "small_vs_large_binary;large_vs_small_binary" | sed 's,([^;]\(*\)[;$]),\1,g' | tr ";" "\n" | gshuf | tr "\n" " " ) )
     left_screen=${array[0]}
     right_screen=${array[1]}
     middle_screen="NULL"
@@ -110,7 +110,7 @@ fi
 SECONDS=`date +%s`
 START_TIME=$(( SECONDS + 15 ))
 
-echo trial will begin at at `date -r $SECONDS '+%H:%M:%S'`
+echo -e \n\ntrial will begin at at `date -r $SECONDS '+%H:%M:%S'`\n\n
 
 # execute the python code and wait
 if [ "$trial_type" == "binary" ]; then
