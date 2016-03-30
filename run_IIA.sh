@@ -25,6 +25,7 @@ killall() {
     # kill process on second computer
     echo "kill $(ps aux | grep 'python' | awk '{print $2}')" | ssh $mini1 /bin/bash
     wait
+    say "you've killed the trial. damn."
     echo TRIAL KILLED
     exit
 }
@@ -85,7 +86,7 @@ if [ "$trial_type" == "binary" ]; then
     left_screen=${array[0]}
     right_screen=${array[1]}
     middle_screen="NULL"
-    echo $left_screen && echo $right_screen
+    echo left screen: $left_screen && echo right screen: $right_screen
 elif [  "$trial_type" == "trinary" ]; then
     # rotate the which male appears where by one (i.e. everyone moves 1 monitor to the left)
     echo "`tail -1 trinary_male_list && head -2 trinary_male_list`" > trinary_male_list
@@ -120,7 +121,8 @@ if [ "$trial_type" == "binary" ]; then
     python show_vid.py -v1 "$left_screen"".mp4" -v2 "$right_screen"".mp4" -t "$START_TIME" &
     # record the trial
     echo "sleep 14; ffmpeg -f avfoundation -video_size 1280x720 -framerate 10 -i "Micro:none" -crf 28 -vcodec libx264 -y -t "$LENGTH_OF_VIDEOS"  ~/Desktop/"$female"_"$trial_type"_"$redo"".avi" || echo "video failed"" | ssh $mini1 /bin/bash &
-    #wait
+    say "make sure the blue light on the webcam is gone"
+    wait
 else
     # show middle screen video
     echo "cd `pwd` && python show_vid.py -v1 "$middle_screen"".mp4" -t "$START_TIME"" | ssh $mini1 /bin/bash &
@@ -131,7 +133,8 @@ else
     echo "sleep 14; ffmpeg -f avfoundation -video_size 1280x720 -framerate 10 -i "Micro:none" -crf 28 -vcodec libx264 -y -t "$LENGTH_OF_VIDEOS" ~/Desktop/"$female"_"$trial_type"_"$redo"".avi" || echo "video failed"" | ssh $mini1 /bin/bash &
     # ssh $mini1 python show_vid.py -v1 "$middle_screen"".mp4" &
     #ssh $mini1 cd ~/Documents/displaying_videos/; python show_vid.py -v1 "$middle_screen"".mp4" &
-    #wait
+    say "make sure the blue light on the webcam is on"
+    wait
 fi
 
 if [ $? -gt 0 ]; then
