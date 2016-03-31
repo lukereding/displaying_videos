@@ -20,10 +20,10 @@ echo -e "this script runs the background video, which should be 60 minutes long,
 
 # do you want to record the acclimation?
 while true; do
-    read -p "type Y if you want to record a video of the trial; otherwise type N." ny
-    case $ny in
-        [Yy]* ) echo -e "\n\nok, I'll record the trial."; record=yes; break;
-        [Nn]* ) echo "\n\na video of this acclimation will not recorded."; record=no; break;
+    read -p "type Y if you want to record a video of the trial; otherwise type N." yn
+    case $yn in
+        [Yy]* ) echo recording the trial; record=yes; break;;
+        [Nn]* ) echo not recording the trial; record=no; break;;
         * ) echo "type y or n";;
     esac
 done
