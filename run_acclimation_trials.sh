@@ -28,11 +28,6 @@ while true; do
     esac
 done
 
-# ask mini1 to record:
-if [ "$record" == "yes" ]; then
-    echo "sleep 14; ffmpeg -f avfoundation -video_size 1280x720 -framerate 10 -i "Micro:none" -crf 28 -vcodec libx264 -y -t "$LENGTH_OF_VIDEOS"  ~/Desktop/acclimation_trials/"`date "+%Y-%m-%d-%H:%M:%S"`"".avi" || echo "video failed"" | ssh $mini1 /bin/bash &
-fi
-
 # start the trial
 
 say -v $RANDOM_VOICE "Pressing Y and Enter on the keyboard will start the acclimation for 1 hour."
@@ -49,6 +44,11 @@ SECONDS=`date +%s`
 START_TIME=$(( SECONDS + 15 ))
 
 echo acclimation will begin at at `date -r $START_TIME '+%H:%M:%S'`
+
+# ask mini1 to record:
+if [ "$record" == "yes" ]; then
+    echo "sleep 14; ffmpeg -f avfoundation -video_size 1280x720 -framerate 10 -i "Micro:none" -crf 28 -vcodec libx264 -y -t "$LENGTH_OF_VIDEOS"  ~/Desktop/acclimation_trials/"`date "+%Y-%m-%d-%H.%M.%S"`"".avi" || echo "video failed"" | ssh $mini1 /bin/bash &
+fi
 
 # show the background60min/mp4 video on all three screens
 echo "cd `pwd` && python show_vid.py -v1 background60min.mp4 -t "$START_TIME"" | ssh $mini1 /bin/bash &
