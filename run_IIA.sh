@@ -42,6 +42,8 @@ getArray() {
 # explain what's going on to the user
 echo -e "\n\nthere are a couple of steps to using this program\n\nfirst you'll be asked to enter in some basic information about the trial. The script will randomly determine which videos get sent to which monitor.\n\nThe script will then automatically start running the videos and the recording the video for tracking analysis later.\n\nWhen the trial is over, you will be prompted to enter in some more information about the fish, like its weight. Once you do this the trial is logged in a log file stored here: $LOG_FILE. At that point, the script will exit and you can start a new trial.\n\n\n"
 
+say "time to get this party started"
+
 # have the user enter in basic information about the trial
 echo -e "name of female:\t \c "
 read female
@@ -57,7 +59,7 @@ say "the temperature is "$temperature" degrees."
 echo -e "your name?:\t \c "
 read observer
 
-say "hi "$observer""
+say "hi, "$observer""
 
 # find out if there is a file called trinary_male_list; if not, create it
 if [ ! -f trinary_male_list ]; then
@@ -125,7 +127,7 @@ if [ "$trial_type" == "binary" ]; then
     python show_vid.py -v1 "$left_screen"".mp4" -v2 "$right_screen"".mp4" -t "$START_TIME" &
     # record the trial
     echo "sleep 14; ffmpeg -f avfoundation -video_size 1280x720 -framerate 10 -i "Micro:none" -crf 28 -vcodec libx264 -y -t "$LENGTH_OF_VIDEOS"  ~/Desktop/"$female"_"$trial_type"_"$redo"".avi" || echo "video failed"" | ssh $mini1 /bin/bash &
-    say "make sure the blue light comes on in a few seconds."
+    say "make sure the blue light comes on in, like, 10 seconds."
     wait
 else
     # show middle screen video
@@ -137,7 +139,7 @@ else
     echo "sleep 14; ffmpeg -f avfoundation -video_size 1280x720 -framerate 10 -i "Micro:none" -crf 28 -vcodec libx264 -y -t "$LENGTH_OF_VIDEOS" ~/Desktop/"$female"_"$trial_type"_"$redo"".avi" || echo "video failed"" | ssh $mini1 /bin/bash &
     # ssh $mini1 python show_vid.py -v1 "$middle_screen"".mp4" &
     #ssh $mini1 cd ~/Documents/displaying_videos/; python show_vid.py -v1 "$middle_screen"".mp4" &
-    say "make sure the blue light on the webcam comes on in a few seconds."
+    say "make sure the blue light on the webcam comes on in like, 10 seconds."
     wait
 fi
 
@@ -149,6 +151,7 @@ if [ $? -gt 0 ]; then
 fi
 
 # after trial is over, get the size of the fish
+say "the trial is over. please enter the weight of the female in grams"
 echo -e "weight of female in grams: \c "
 read weight
 while [[ $weight == *[!0-9.]* ]]; do
