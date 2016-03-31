@@ -18,6 +18,23 @@ mini1=lukereding@128.83.192.234
 
 echo -e "this script runs the background video, which should be 60 minutes long, on all three screens\n\n"
 
+# do you want to record the acclimation?
+while true; do
+    read -p "type Y if you want to record a video of the trial; otherwise type N." ny
+    case $ny in
+        [Yy]* ) echo -e "\n\nok, I'll record the trial."; record=yes; break;
+        [Nn]* ) echo "\n\na video of this acclimation will not recorded."; record=no; break;
+        * ) echo "type y or n";;
+    esac
+done
+
+# ask mini1 to record:
+if [ "$record" == "yes" ]; then
+    echo "sleep 14; ffmpeg -f avfoundation -video_size 1280x720 -framerate 10 -i "Micro:none" -crf 28 -vcodec libx264 -y -t "$LENGTH_OF_VIDEOS"  ~/Desktop/acclimation_trials/"`date "+%Y-%m-%d-%H:%M:%S"`"".avi" || echo "video failed"" | ssh $mini1 /bin/bash &
+fi
+
+# start the trial
+
 say -v $RANDOM_VOICE "Pressing Y and Enter on the keyboard will start the acclimation for 1 hour."
 
 while true; do
