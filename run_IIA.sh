@@ -14,6 +14,19 @@ mini1=lukereding@128.83.192.234
 date=`date`
 LENGTH_OF_VIDEOS=1260
 
+# for when the computer talks to you
+VOICE=(
+    'Samantha'
+    'Kathy'
+    'Karen'
+    'Bruce'
+    'Alex'
+    'Bad News'
+)
+#pick a random voice
+rand=$[ $RANDOM % ${#VOICE[@]} ]
+RANDOM_VOICE=${VOICE[$rand]}
+
 # what do to if the user hits control +c during the script execution
 # trap ctrl-c and call ctrl_c()
 trap 'killall' INT
@@ -42,11 +55,12 @@ getArray() {
 # explain what's going on to the user
 echo -e "\n\nthere are a couple of steps to using this program\n\nfirst you'll be asked to enter in some basic information about the trial. The script will randomly determine which videos get sent to which monitor.\n\nThe script will then automatically start running the videos and the recording the video for tracking analysis later.\n\nWhen the trial is over, you will be prompted to enter in some more information about the fish, like its weight. Once you do this the trial is logged in a log file stored here: $LOG_FILE. At that point, the script will exit and you can start a new trial.\n\n\n"
 
-say "time to get this party started"
+say -v $RANDOM_VOICE "time to get this party started"
 
 # have the user enter in basic information about the trial
 echo -e "name of female:\t \c "
 read female
+say -v $RANDOM_VOICE "cool. You're testing $female"
 echo -e "water temperature in the tank:\t \c "
 read temperature
 while [[ $temperature == *[!0-9.]* ]]; do
@@ -54,12 +68,12 @@ while [[ $temperature == *[!0-9.]* ]]; do
     read temperature
 done
 
-say "the temperature is "$temperature" degrees."
+say -v $RANDOM_VOICE "the temperature is "$temperature" degrees."
 
 echo -e "your name?:\t \c "
 read observer
 
-say "hi, "$observer""
+say -v $RANDOM_VOICE "hi "$observer""
 
 # find out if there is a file called trinary_male_list; if not, create it
 if [ ! -f trinary_male_list ]; then
@@ -75,6 +89,8 @@ while true; do
         * ) echo "Please answer b or t.";;
     esac
 done
+
+say -v $RANDOM_VOICE "$trial_type trial."
 
 # find out whether this trial is redo or not
 while true; do
@@ -151,13 +167,7 @@ if [ $? -gt 0 ]; then
 fi
 
 # after trial is over, get the size of the fish
-say "the trial is over. please enter the weight of the female in grams"
-echo -e "weight of female in grams: \c "
-read weight
-while [[ $weight == *[!0-9.]* ]]; do
-    echo "you typed in "$weight" for the weight. please try typing it in again using only numbers and periods:"
-    read weight
-done
+say -v $RANDOM_VOICE "the trial is over. please check and make sure this information is correct."
 
 # repeat the trial information back to the user, make sure everything looks good
 echo -e "here's what you entered:\n\n"
@@ -192,11 +202,12 @@ cat $LOG_FILE | mail -s "log file: `date`" lukereding@gmail.com
 if [ $? -gt 0 ]; then
   echo -e "\n\n\n\tFailed to email log file. Let Luke know.\n\n"
   echo "Failed to email log file" | mail -s "failed to email log file" lukereding@gmail.com
+  say -v $RANDOM_VOICE "shit. log file couldn't send. make a note."
   exit 1
 fi
 
 echo -e "\n\n\n\n\tthe script is done running. everything went according to plan."
 
-say "trial ended"
+say -v $RANDOM_VOICE "trial ended."
 
 exit 0

@@ -2,14 +2,24 @@
 
 ## for the acclimation trials before mate choice trials start
 # assumes you're logged onto mini2
-
+VOICE=(
+    'Samantha'
+    'Kathy'
+    'Karen'
+    'Bruce'
+    'Alex'
+    'Bad News'
+)
+#pick a random voice
+rand1=$[ $RANDOM % ${#VOICE[@]} ]
+RANDOM_VOICE=${VOICE[$rand]}
 
 mini1=lukereding@128.83.192.234
 
 echo -e "this script runs the background video, which should be 60 minutes long, on all three screens\n\n"
 
+say -v $RANDOM_VOICE "Pressing Y and Enter on the keyboard will start the acclimation for 1 hour."
 
-echo -e "type Y when you're ready to begin the acclimation:\t \c "
 while true; do
     read -p "type Y then press Enter when you're ready to begin the acclimation:." y
     case $y in
@@ -29,7 +39,8 @@ python show_vid.py -v1 background60min.mp4 -v2 background60min.mp4 -t "$START_TI
 
 wait
 
+say -v $RANDOM_VOICE "The acclimation trial is over. Exiting the program now. Smell you later."
+
 echo "acclimation trial over. exiting."
 
 exit 0
-
