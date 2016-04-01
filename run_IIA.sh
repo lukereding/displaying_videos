@@ -169,6 +169,9 @@ fi
 # after trial is over, get the size of the fish
 say -v $RANDOM_VOICE "the trial is over. please check and make sure this information is correct."
 
+# email me to let me know the trial is over.
+echo the trial is over | mail -s "the trial is over" lukereding@gmail.com
+
 # repeat the trial information back to the user, make sure everything looks good
 echo -e "here's what you entered:\n\n"
 echo -e "female\tdate\t\t\t\ttemperature\t\tobserver\ttrial_type\tleft_screen\tright_screen\tmiddle_screen"
