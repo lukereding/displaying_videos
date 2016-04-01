@@ -190,11 +190,11 @@ done
 # save a log file of the trial
 #append row if the file already exists
 if [ -f $LOG_FILE ]; then
-    echo "$female,$date,$temperature,$observer,$trial_type,$left_screen,$right_screen,$middle_screen,$looks_good" >> $LOG_FILE
+    echo "$female,$date,$temperature,$observer,$trial_type,$left_screen,$right_screen,$middle_screen,$redo,$looks_good" >> $LOG_FILE
 else
     # then it's the first trial first trial --
     echo "female,date,temperature,observer,trial_type,left_screen,right_screen,middle_screen,looks_good" > $LOG_FILE
-    echo "$female,$date,$temperature,$observer,$trial_type,$left_screen,$right_screen,$middle_screen,$looks_good" > $LOG_FILE
+    echo "$female,$date,$temperature,$observer,$trial_type,$left_screen,$right_screen,$middle_screen,$redo,$looks_good" > $LOG_FILE
 fi
 
 # email the log file to yourself for save-keeping
