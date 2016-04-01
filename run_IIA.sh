@@ -21,7 +21,6 @@ VOICE=(
     'Karen'
     'Bruce'
     'Alex'
-    'Bad News'
 )
 #pick a random voice
 rand=$[ $RANDOM % ${#VOICE[@]} ]
