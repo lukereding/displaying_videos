@@ -59,7 +59,7 @@ say -v $RANDOM_VOICE "time to get this party started"
 # have the user enter in basic information about the trial
 echo -e "name of female:\t \c "
 read female
-say -v $RANDOM_VOICE "cool. You're testing $female"
+say -v $RANDOM_VOICE "cool. You are testing $female"
 echo -e "water temperature in the tank:\t \c "
 read temperature
 while [[ $temperature == *[!0-9.]* ]]; do
@@ -193,7 +193,7 @@ if [ -f $LOG_FILE ]; then
     echo "$female,$date,$temperature,$observer,$trial_type,$left_screen,$right_screen,$middle_screen,$redo,$looks_good" >> $LOG_FILE
 else
     # then it's the first trial first trial --
-    echo "female,date,temperature,observer,trial_type,left_screen,right_screen,middle_screen,looks_good" > $LOG_FILE
+    echo "female,date,temperature,observer,trial_type,left_screen,right_screen,middle_screen,redo,looks_good" > $LOG_FILE
     echo "$female,$date,$temperature,$observer,$trial_type,$left_screen,$right_screen,$middle_screen,$redo,$looks_good" > $LOG_FILE
 fi
 

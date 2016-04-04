@@ -50,9 +50,9 @@ if [ "$record" == "yes" ]; then
     echo "sleep 14; ffmpeg -f avfoundation -video_size 1280x720 -framerate 10 -i "Micro:none" -crf 28 -vcodec libx264 -y -t "$LENGTH_OF_VIDEOS" ~/Desktop/acclimation_trials/"`date "+%Y.%m.%d.%H.%M.%S"`"".avi" || echo "video failed"" | ssh $mini1 /bin/bash &
 fi
 
-# show the background60min.mp4 video on all three screens
-echo "cd `pwd` && python show_vid.py -v1 background60min.mp4 -t "$START_TIME"" | ssh $mini1 /bin/bash &
-python show_vid.py -v1 background60min.mp4 -v2 background60min.mp4 -t "$START_TIME" &
+# show the background120min.mp4 video on all three screens
+echo "cd `pwd` && python show_vid.py -v1 background120min.mp4 -t "$START_TIME"" | ssh $mini1 /bin/bash &
+python show_vid.py -v1 background120min.mp4 -v2 background120min.mp4 -t "$START_TIME" &
 
 wait
 
