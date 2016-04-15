@@ -95,8 +95,8 @@ say -v $RANDOM_VOICE "$trial_type trial."
 while true; do
     read -p "Is this a redo trial? Type in 'y' or 'n' and then press enter." yn
     case $yn in
-        [Yy]* ) echo "it's a redo "; redo=''; break;;
-        [Nn]* ) echo "first time"; redo='redo'; break;;
+        [Yy]* ) echo "it's a redo "; redo='redo'; break;;
+        [Nn]* ) echo "first time"; redo=''; break;;
         * ) echo "Please answer y or n.";;
     esac
 done
